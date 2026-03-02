@@ -4,6 +4,14 @@ const Categoria = require('../models/categoria');
 exports.index = async (req, res) => {
   try {
     const filmes = await Filme.listarTodas();
+    // Normalize relative image paths to absolute URLs for display
+    const host = req.get('host');
+    const protocol = req.protocol;
+    filmes.forEach(f => {
+      if (f.imagem && f.imagem.startsWith('/')) {
+        f.imagem = `${protocol}://${host}${f.imagem}`;
+      }
+    });
     res.render('filmes/index', { title: 'Filmes', filmes });
   } catch (err) {
     req.flash('error_msg', 'Erro ao listar filmes.');
@@ -53,6 +61,12 @@ exports.editar = async (req, res) => {
       return res.redirect('/filmes');
     }
     const categorias = await Categoria.listarTodas();
+    // Normalize relative image path to absolute URL for the edit form
+    if (filme.imagem && filme.imagem.startsWith('/')) {
+      const host = req.get('host');
+      const protocol = req.protocol;
+      filme.imagem = `${protocol}://${host}${filme.imagem}`;
+    }
     res.render('filmes/editar', { title: 'Editar Filme', filme, categorias });
   } catch (err) {
     req.flash('error_msg', 'Erro ao carregar filme.');

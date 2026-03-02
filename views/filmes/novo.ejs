@@ -24,12 +24,15 @@
   </div>
   <div class="mb-3">
     <label class="form-label">Imagem (upload)</label>
-    <input type="file" name="imagem_file" accept="image/*" class="form-control" />
+    <input id="imagem_file_input" type="file" name="imagem_file" accept="image/*" class="form-control" />
     <div class="form-text">Ou forneça uma URL abaixo.</div>
+    <div class="mt-2">
+      <img id="imagem_preview" src="/images/poster-placeholder.svg" alt="preview" style="height:140px;object-fit:cover;border-radius:6px;display:none" />
+    </div>
   </div>
   <div class="mb-3">
     <label class="form-label">URL da Imagem</label>
-    <input type="url" name="imagem_url" class="form-control" placeholder="https://..." />
+    <input type="text" name="imagem_url" class="form-control" placeholder="https://... ou /uploads/nome.png" />
   </div>
 
   <div class="d-flex gap-2">
@@ -37,5 +40,26 @@
     <a href="/filmes" class="btn btn-secondary">Voltar</a>
   </div>
 </form>
+<script>
+  document.addEventListener('DOMContentLoaded', function(){
+    var input = document.getElementById('imagem_file_input');
+    var preview = document.getElementById('imagem_preview');
+    var urlField = document.querySelector('input[name="imagem_url"]');
+    if (!input) return;
+    input.addEventListener('change', function(){
+      var file = input.files && input.files[0];
+      if (file) {
+        var objUrl = URL.createObjectURL(file);
+        preview.src = objUrl;
+        preview.style.display = 'block';
+        // Set a helpful hint in the URL field (final path will be set server-side)
+        urlField.value = '/uploads/' + file.name;
+      } else {
+        preview.src = '/images/poster-placeholder.svg';
+        preview.style.display = 'none';
+      }
+    });
+  });
+</script>
 
 <%- include('../partials/footer') %>
