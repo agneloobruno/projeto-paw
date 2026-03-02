@@ -1,0 +1,13 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='400' height='600' viewBox='0 0 400 600' preserveAspectRatio='xMidYMid slice'>
+  <defs>
+    <linearGradient id='g' x1='0' x2='1'>
+      <stop offset='0' stop-color='#222' />
+      <stop offset='1' stop-color='#111' />
+    </linearGradient>
+  </defs>
+  <rect width='100%' height='100%' fill='url(#g)' />
+  <g fill='#888' font-family='Inter, Arial, sans-serif' font-weight='600' font-size='28' text-anchor='middle'>
+    <text x='50%' y='50%' dy='-10'>Poster</text>
+    <text x='50%' y='50%' dy='30' font-size='16' fill='#4b5563'>Placeholder</text>
+  </g>
+</svg>

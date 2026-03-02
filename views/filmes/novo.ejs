@@ -22,6 +22,15 @@
       <% }) %>
     </select>
   </div>
+  <div class="mb-3">
+    <label class="form-label">Imagem (upload)</label>
+    <input type="file" name="imagem_file" accept="image/*" class="form-control" />
+    <div class="form-text">Ou forneça uma URL abaixo.</div>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">URL da Imagem</label>
+    <input type="url" name="imagem_url" class="form-control" placeholder="https://..." />
+  </div>
 
   <div class="d-flex gap-2">
     <button type="submit" class="btn btn-primary">Salvar</button>

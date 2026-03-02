@@ -9,10 +9,14 @@
   <% if (filmes && filmes.length) { %>
     <div class="movies-grid">
       <% filmes.forEach(function(f){ %>
-        <div class="movie-card">
+        <div class="movie-card cat-<%= f.categoria_id || 0 %>" data-category="<%= f.categoria || '' %>">
           <div class="movie-badge"><% if (f.ano) { %><%= f.ano %><% } else { %>—<% } %></div>
           <div class="movie-poster">
-            <div class="poster-title"><%= (f.titulo && f.titulo.length>20) ? (f.titulo.substring(0,18)+'...') : f.titulo %></div>
+            <% if (f.imagem) { %>
+              <img src="<%= f.imagem %>" alt="<%= f.titulo %>" style="width:100%;height:100%;object-fit:cover;display:block" />
+            <% } else { %>
+              <img src="/images/poster-placeholder.svg" alt="Poster" style="width:100%;height:100%;object-fit:cover;display:block" />
+            <% } %>
           </div>
           <div class="movie-meta">
             <div class="movie-title"><%= f.titulo %></div>

@@ -35,8 +35,18 @@
           </form>
 
           <div class="nav-user d-flex align-items-center">
-            <a href="#" class="me-3 text-muted small">Olá, Usuário</a>
-            <div class="avatar bg-secondary rounded-circle text-white text-center">A</div>
+            <div class="dropdown">
+              <a href="#" class="d-flex align-items-center text-decoration-none text-white" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="/images/avatar-placeholder.svg" alt="Avatar" class="avatar-img rounded-circle me-2">
+                <span class="small text-muted">Usuário</span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                <li><a class="dropdown-item" href="/profile">Perfil</a></li>
+                <li><a class="dropdown-item" href="/settings">Configurações</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item text-danger" href="/logout">Sair</a></li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>

@@ -2,7 +2,7 @@ const db = require('../config/db');
 
 async function listarTodas() {
   const [rows] = await db.query(
-    `SELECT f.id, f.titulo, f.ano, f.categoria_id, c.nome AS categoria
+    `SELECT f.id, f.titulo, f.ano, f.categoria_id, f.imagem AS imagem, c.nome AS categoria
      FROM filmes f
      LEFT JOIN categorias c ON f.categoria_id = c.id
      ORDER BY f.titulo`
@@ -12,7 +12,7 @@ async function listarTodas() {
 
 async function buscarPorId(id) {
   const [rows] = await db.query(
-    `SELECT f.id, f.titulo, f.ano, f.categoria_id, c.nome AS categoria
+    `SELECT f.id, f.titulo, f.ano, f.categoria_id, f.imagem AS imagem, c.nome AS categoria
      FROM filmes f
      LEFT JOIN categorias c ON f.categoria_id = c.id
      WHERE f.id = ?`,
@@ -21,18 +21,18 @@ async function buscarPorId(id) {
   return rows[0] || null;
 }
 
-async function salvar({ titulo, ano, categoria_id }) {
+async function salvar({ titulo, ano, categoria_id, imagem }) {
   const [result] = await db.query(
-    'INSERT INTO filmes (titulo, ano, categoria_id) VALUES (?, ?, ?)',
-    [titulo, ano || null, categoria_id || null]
+    'INSERT INTO filmes (titulo, ano, categoria_id, imagem) VALUES (?, ?, ?, ?)',
+    [titulo, ano || null, categoria_id || null, imagem || null]
   );
   return result.insertId;
 }
 
-async function atualizar({ id, titulo, ano, categoria_id }) {
+async function atualizar({ id, titulo, ano, categoria_id, imagem }) {
   const [result] = await db.query(
-    'UPDATE filmes SET titulo = ?, ano = ?, categoria_id = ? WHERE id = ?',
-    [titulo, ano || null, categoria_id || null, id]
+    'UPDATE filmes SET titulo = ?, ano = ?, categoria_id = ?, imagem = ? WHERE id = ?',
+    [titulo, ano || null, categoria_id || null, imagem || null, id]
   );
   return result.affectedRows;
 }

@@ -22,7 +22,8 @@ exports.novo = async (req, res) => {
 };
 
 exports.salvar = async (req, res) => {
-  const { titulo, ano, categoria_id } = req.body;
+  const { titulo, ano, categoria_id, imagem_url } = req.body;
+  const imagem_file = req.file;
   if (!titulo || !titulo.trim()) {
     req.flash('error_msg', 'Título é obrigatório.');
     return res.redirect('/filmes/novo');
@@ -32,7 +33,8 @@ exports.salvar = async (req, res) => {
     return res.redirect('/filmes/novo');
   }
   try {
-    await Filme.salvar({ titulo: titulo.trim(), ano: ano ? parseInt(ano, 10) : null, categoria_id });
+    const imagem = imagem_file ? ('/uploads/' + imagem_file.filename) : (imagem_url && imagem_url.trim() ? imagem_url.trim() : null);
+    await Filme.salvar({ titulo: titulo.trim(), ano: ano ? parseInt(ano, 10) : null, categoria_id, imagem });
     req.flash('success_msg', 'Filme salvo.');
     res.redirect('/filmes');
   } catch (err) {
@@ -58,7 +60,8 @@ exports.editar = async (req, res) => {
 };
 
 exports.atualizar = async (req, res) => {
-  const { id, titulo, ano, categoria_id } = req.body;
+  const { id, titulo, ano, categoria_id, imagem_url } = req.body;
+  const imagem_file = req.file;
   if (!titulo || !titulo.trim()) {
     req.flash('error_msg', 'Título é obrigatório.');
     return res.redirect(`/filmes/editar/${id}`);
@@ -68,7 +71,8 @@ exports.atualizar = async (req, res) => {
     return res.redirect(`/filmes/editar/${id}`);
   }
   try {
-    await Filme.atualizar({ id, titulo: titulo.trim(), ano: ano ? parseInt(ano, 10) : null, categoria_id });
+    const imagem = imagem_file ? ('/uploads/' + imagem_file.filename) : (imagem_url && imagem_url.trim() ? imagem_url.trim() : null);
+    await Filme.atualizar({ id, titulo: titulo.trim(), ano: ano ? parseInt(ano, 10) : null, categoria_id, imagem });
     req.flash('success_msg', 'Filme atualizado.');
     res.redirect('/filmes');
   } catch (err) {

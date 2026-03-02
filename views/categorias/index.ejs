@@ -1,6 +1,6 @@
 <%- include('../partials/header') %>
 
-<div class="d-flex justify-content-between align-items-center mb-3">
+<div class="d-flex justify-content-between align-items-center mb-3 main-title">
   <h1 class="h3 mb-0">Categorias</h1>
   <form class="d-flex align-items-center" action="/categorias/salvar" method="post">
     <label for="nova-categoria" class="visually-hidden form-label">Nome</label>
@@ -11,29 +11,33 @@
 
 <div class="main-card">
   <% if (categorias && categorias.length) { %>
-    <table class="table table-hover table-striped">
-      <thead>
-        <tr>
-          <th>Nome</th>
-          <th style="width:140px;text-align:right">Ações</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% categorias.forEach(function(c) { %>
-          <tr>
-            <td><%= c.nome %></td>
-            <td class="text-end">
-              <a href="/categorias/editar/<%= c.id %>" class="btn btn-sm btn-warning me-1" title="Editar">
-                <i class="bi bi-pencil"></i>
-              </a>
-              <a href="#" data-href="/categorias/excluir/<%= c.id %>" data-name="<%= c.nome %>" class="btn btn-sm btn-danger btn-delete" title="Excluir">
-                <i class="bi bi-trash"></i>
-              </a>
-            </td>
-          </tr>
-        <% }) %>
-      </tbody>
-    </table>
+    <div class="position-relative">
+      <button class="btn btn-sm btn-outline-light position-absolute" id="cat-prev" style="left:-10px;top:50%;transform:translateY(-50%);z-index:2"><i class="bi bi-chevron-left"></i></button>
+      <div class="categories-row" id="categoriesScroll">
+      <% categorias.forEach(function(c) { %>
+        <div class="category-tile">
+          <div>
+            <div class="category-name"><%= c.nome %></div>
+            <div class="text-muted small">Ver filmes por categoria</div>
+          </div>
+          <div class="category-actions d-flex justify-content-end">
+            <a href="/categorias/editar/<%= c.id %>" class="btn btn-sm btn-outline-warning me-2" title="Editar"><i class="bi bi-pencil"></i></a>
+            <a href="#" data-href="/categorias/excluir/<%= c.id %>" data-name="<%= c.nome %>" class="btn btn-sm btn-danger btn-delete" title="Excluir"><i class="bi bi-trash"></i></a>
+          </div>
+        </div>
+      <% }) %>
+      </div>
+      <button class="btn btn-sm btn-outline-light position-absolute" id="cat-next" style="right:-10px;top:50%;transform:translateY(-50%);z-index:2"><i class="bi bi-chevron-right"></i></button>
+      <script>
+        document.addEventListener('DOMContentLoaded', function(){
+          var sc = document.getElementById('categoriesScroll');
+          var prev = document.getElementById('cat-prev');
+          var next = document.getElementById('cat-next');
+          prev.addEventListener('click', function(){ sc.scrollBy({ left: -260, behavior: 'smooth' }); });
+          next.addEventListener('click', function(){ sc.scrollBy({ left: 260, behavior: 'smooth' }); });
+        });
+      </script>
+    </div>
   <% } else { %>
     <div class="text-center py-4">
       <p class="mb-2">Nenhuma categoria cadastrada.</p>
