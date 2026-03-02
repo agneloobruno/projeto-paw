@@ -1,5 +1,5 @@
 const Filme = require('../models/filme');
-const axios = require('axios');
+const omdb = require('../utils/omdb');
 const Categoria = require('../models/categoria');
 
 exports.index = async (req, res) => {
@@ -44,18 +44,15 @@ exports.salvar = async (req, res) => {
   try {
     let imagem = imagem_file ? ('/uploads/' + imagem_file.filename) : (imagem_url && imagem_url.trim() ? imagem_url.trim() : null);
     let imdb_rating = null;
-    // If no imagem provided and OMDb key available, try to fetch Poster and rating
+    // If no imagem provided, try to fetch Poster and rating from OMDb (helper)
     const omdbKey = process.env.OMDB_API_KEY;
     if ((!imagem || imagem === '') && omdbKey) {
       try {
-        const q = `http://www.omdbapi.com/?t=${encodeURIComponent(titulo.trim())}` + (ano ? `&y=${encodeURIComponent(ano)}` : '') + `&apikey=${omdbKey}`;
-        const r = await axios.get(q);
-        if (r.data && r.data.Response === 'True') {
-          if (r.data.Poster && r.data.Poster !== 'N/A') imagem = r.data.Poster;
-          if (r.data.imdbRating && r.data.imdbRating !== 'N/A') imdb_rating = r.data.imdbRating;
-        }
+        const { poster, imdbRating } = await omdb.fetchPosterAndRating(titulo.trim(), ano, omdbKey);
+        if (poster) imagem = poster;
+        if (imdbRating) imdb_rating = imdbRating;
       } catch (e) {
-        console.warn('OMDb fetch failed:', e.message);
+        console.warn('OMDb helper failed:', e.message);
       }
     }
     const insertId = await Filme.salvar({ titulo: titulo.trim(), ano: ano ? parseInt(ano, 10) : null, categoria_id, imagem, imdb_rating });
@@ -105,17 +102,14 @@ exports.atualizar = async (req, res) => {
     let imagem = imagem_file ? ('/uploads/' + imagem_file.filename) : (imagem_url && imagem_url.trim() ? imagem_url.trim() : null);
     let imdb_rating = null;
     const omdbKey = process.env.OMDB_API_KEY;
-    // If we don't have an imdb_rating yet (or imagem is a URL and we have key), try to refresh
-    if (omdbKey) {
+    // If we don't have an imagem and OMDb key is present, try to fetch poster/rating
+    if ((!imagem || imagem === '') && omdbKey) {
       try {
-        const q = `http://www.omdbapi.com/?t=${encodeURIComponent(titulo.trim())}` + (ano ? `&y=${encodeURIComponent(ano)}` : '') + `&apikey=${omdbKey}`;
-        const r = await axios.get(q);
-        if (r.data && r.data.Response === 'True') {
-          if ((!imagem || imagem === '') && r.data.Poster && r.data.Poster !== 'N/A') imagem = r.data.Poster;
-          if (r.data.imdbRating && r.data.imdbRating !== 'N/A') imdb_rating = r.data.imdbRating;
-        }
+        const { poster, imdbRating } = await omdb.fetchPosterAndRating(titulo.trim(), ano, omdbKey);
+        if (poster) imagem = poster;
+        if (imdbRating) imdb_rating = imdbRating;
       } catch (e) {
-        console.warn('OMDb fetch failed:', e.message);
+        console.warn('OMDb helper failed:', e.message);
       }
     }
     await Filme.atualizar({ id, titulo: titulo.trim(), ano: ano ? parseInt(ano, 10) : null, categoria_id, imagem, imdb_rating });
