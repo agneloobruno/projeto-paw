@@ -1,26 +1,45 @@
 <%- include('../partials/header') %>
 
-<h1>Categorias</h1>
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="h3 mb-0">Categorias</h1>
+  <form class="d-flex align-items-center" action="/categorias/salvar" method="post">
+    <label for="nova-categoria" class="visually-hidden form-label">Nome</label>
+    <input id="nova-categoria" class="form-control form-control-sm me-2" type="text" name="nome" placeholder="Nova categoria" required />
+    <button class="btn btn-sm btn-primary" type="submit">Salvar</button>
+  </form>
+</div>
 
-<form action="/categorias/salvar" method="post">
-  <input type="text" name="nome" placeholder="Nova categoria" required />
-  <button type="submit">Salvar</button>
-</form>
-
-<hr />
-
-<ul>
+<div class="main-card">
   <% if (categorias && categorias.length) { %>
-    <% categorias.forEach(function(c) { %>
-      <li>
-        <%= c.nome %> 
-        <a href="/categorias/editar/<%= c.id %>">editar</a>
-        <a href="/categorias/excluir/<%= c.id %>" onclick="return confirm('Excluir?')">excluir</a>
-      </li>
-    <% }) %>
+    <table class="table table-hover table-striped">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th style="width:140px;text-align:right">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% categorias.forEach(function(c) { %>
+          <tr>
+            <td><%= c.nome %></td>
+            <td class="text-end">
+              <a href="/categorias/editar/<%= c.id %>" class="btn btn-sm btn-warning me-1" title="Editar">
+                <i class="bi bi-pencil"></i>
+              </a>
+              <a href="#" data-href="/categorias/excluir/<%= c.id %>" data-name="<%= c.nome %>" class="btn btn-sm btn-danger btn-delete" title="Excluir">
+                <i class="bi bi-trash"></i>
+              </a>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
   <% } else { %>
-    <li>Nenhuma categoria cadastrada.</li>
+    <div class="text-center py-4">
+      <p class="mb-2">Nenhuma categoria cadastrada.</p>
+      <a href="/categorias" class="btn btn-sm btn-primary">Cadastrar Nova</a>
+    </div>
   <% } %>
-</ul>
+</div>
 
 <%- include('../partials/footer') %>

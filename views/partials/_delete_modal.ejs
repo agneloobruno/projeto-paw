@@ -1,0 +1,45 @@
+<!-- Delete confirmation modal -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirmação</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+      </div>
+      <div class="modal-body">
+        <p>Tem certeza que deseja excluir <strong id="deleteItemName"></strong>?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button id="confirmDeleteBtn" type="button" class="btn btn-danger">Excluir</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var modalEl = document.getElementById('confirmDeleteModal');
+    if (!modalEl) return;
+    var deleteNameEl = document.getElementById('deleteItemName');
+    var confirmBtn = document.getElementById('confirmDeleteBtn');
+    var currentHref = null;
+
+    document.querySelectorAll('.btn-delete').forEach(function(btn){
+      btn.addEventListener('click', function(e){
+        e.preventDefault();
+        currentHref = btn.getAttribute('data-href');
+        var name = btn.getAttribute('data-name') || '';
+        deleteNameEl.textContent = name;
+        var modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+        modal.show();
+      });
+    });
+
+    confirmBtn.addEventListener('click', function(){
+      if (currentHref) {
+        window.location.href = currentHref;
+      }
+    });
+  });
+</script>

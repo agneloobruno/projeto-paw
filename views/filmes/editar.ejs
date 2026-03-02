@@ -2,26 +2,33 @@
 
 <h1>Editar Filme</h1>
 
-<form action="/filmes/atualizar" method="post">
+<form action="/filmes/atualizar" method="post" class="mt-3">
   <input type="hidden" name="id" value="<%= filme.id %>" />
 
-  <label>Título</label>
-  <input type="text" name="titulo" value="<%= filme.titulo %>" required />
+  <div class="mb-3">
+    <label for="titulo" class="form-label">Título</label>
+    <input id="titulo" class="form-control" type="text" name="titulo" value="<%= filme.titulo %>" required />
+  </div>
 
-  <label>Ano</label>
-  <input type="number" name="ano" value="<%= filme.ano || '' %>" />
+  <div class="mb-3">
+    <label for="ano" class="form-label">Ano</label>
+    <input id="ano" class="form-control" type="number" name="ano" value="<%= filme.ano || '' %>" />
+  </div>
 
-  <label>Categoria</label>
-  <select name="categoria_id" required>
-    <option value="">-- selecione --</option>
-    <% categorias.forEach(function(c){ %>
-      <option value="<%= c.id %>" <%= c.id == filme.categoria_id ? 'selected' : '' %>><%= c.nome %></option>
-    <% }) %>
-  </select>
+  <div class="mb-3">
+    <label for="categoria" class="form-label">Categoria</label>
+    <select id="categoria" name="categoria_id" class="form-select" required>
+      <option value="">-- selecione --</option>
+      <% categorias.forEach(function(c){ %>
+        <option value="<%= c.id %>" <%= c.id == filme.categoria_id ? 'selected' : '' %>><%= c.nome %></option>
+      <% }) %>
+    </select>
+  </div>
 
-  <button type="submit">Atualizar</button>
+  <div class="d-flex gap-2">
+    <button type="submit" class="btn btn-primary">Atualizar</button>
+    <a href="/filmes" class="btn btn-secondary">Voltar</a>
+  </div>
 </form>
-
-<p><a href="/filmes">Voltar</a></p>
 
 <%- include('../partials/footer') %>
