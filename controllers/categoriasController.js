@@ -9,7 +9,24 @@ exports.index = async (req, res) => {
       const cnt = await Filme.contarPorCategoria(c.id);
       return { ...c, count: cnt };
     }));
-    res.render('categorias/index', { title: 'Categorias', categorias: categoriasWithCount });
+
+    // Assign a nice image to each category (bank images)
+    const images = [
+      'https://images.unsplash.com/photo-1505682634904-d7c0b7d7a4d7?auto=format&fit=crop&w=800&q=60',
+      'https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?auto=format&fit=crop&w=800&q=60',
+      'https://images.unsplash.com/photo-1517604645673-4ec9a01d77a6?auto=format&fit=crop&w=800&q=60',
+      'https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=800&q=60',
+      'https://images.unsplash.com/photo-1502139214985-9faff7d28b9b?auto=format&fit=crop&w=800&q=60',
+      'https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?auto=format&fit=crop&w=800&q=60',
+      'https://images.unsplash.com/photo-1517604634494-6fb1a0a0c6b4?auto=format&fit=crop&w=800&q=60'
+    ];
+
+    const categoriasWithImage = categoriasWithCount.map((c, i) => ({
+      ...c,
+      image: c.image || images[i % images.length]
+    }));
+
+    res.render('categorias/index', { title: 'Categorias', categorias: categoriasWithImage });
   } catch (err) {
     req.flash('error_msg', 'Erro ao listar categorias.');
     res.redirect('/');
