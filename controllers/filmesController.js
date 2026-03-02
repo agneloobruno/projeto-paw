@@ -34,9 +34,10 @@ exports.salvar = async (req, res) => {
   }
   try {
     const imagem = imagem_file ? ('/uploads/' + imagem_file.filename) : (imagem_url && imagem_url.trim() ? imagem_url.trim() : null);
-    await Filme.salvar({ titulo: titulo.trim(), ano: ano ? parseInt(ano, 10) : null, categoria_id, imagem });
+    const insertId = await Filme.salvar({ titulo: titulo.trim(), ano: ano ? parseInt(ano, 10) : null, categoria_id, imagem });
     req.flash('success_msg', 'Filme salvo.');
-    res.redirect('/filmes');
+    // Redirect to edit page so user can see image URL/preview immediately
+    res.redirect(`/filmes/editar/${insertId}`);
   } catch (err) {
     req.flash('error_msg', 'Erro ao salvar filme.');
     res.redirect('/filmes/novo');
