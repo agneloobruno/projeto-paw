@@ -18,6 +18,7 @@
     "express": "^5.2.1",
     "express-session": "^1.19.0",
     "mysql2": "^3.18.2",
-    "multer": "^1.4.4"
+    "multer": "^1.4.4",
+    "axios": "^1.4.0"
   }
 }

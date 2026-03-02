@@ -19,17 +19,24 @@
             <% } %>
           </div>
           <div class="movie-meta">
-            <div class="movie-title"><%= f.titulo %></div>
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="movie-cat"><%= f.categoria || '—' %></div>
+            <div class="d-flex justify-content-between align-items-start">
               <div>
-                <a href="/filmes/editar/<%= f.id %>" class="btn btn-sm btn-outline-warning me-1" title="Editar">
-                  <i class="bi bi-pencil"></i>
-                </a>
-                <a href="#" data-href="/filmes/excluir/<%= f.id %>" data-name="<%= f.titulo %>" class="btn btn-sm btn-danger btn-delete" title="Excluir">
-                  <i class="bi bi-trash"></i>
-                </a>
+                <div class="movie-title"><%= f.titulo %></div>
+                <div class="movie-cat"><%= f.categoria || '—' %></div>
               </div>
+              <div class="text-end">
+                <% if (f.imdb_rating) { %>
+                  <span class="badge bg-warning text-dark" title="IMDB Rating"><i class="bi bi-star-fill"></i> <%= f.imdb_rating %></span>
+                <% } %>
+              </div>
+            </div>
+            <div class="d-flex justify-content-end mt-2">
+              <a href="/filmes/editar/<%= f.id %>" class="btn btn-sm btn-outline-warning me-1" title="Editar">
+                <i class="bi bi-pencil"></i>
+              </a>
+              <a href="#" data-href="/filmes/excluir/<%= f.id %>" data-name="<%= f.titulo %>" class="btn btn-sm btn-danger btn-delete" title="Excluir">
+                <i class="bi bi-trash"></i>
+              </a>
             </div>
           </div>
         </div>

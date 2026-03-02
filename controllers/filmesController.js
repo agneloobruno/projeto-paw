@@ -1,4 +1,5 @@
 const Filme = require('../models/filme');
+const axios = require('axios');
 const Categoria = require('../models/categoria');
 
 exports.index = async (req, res) => {
@@ -41,8 +42,23 @@ exports.salvar = async (req, res) => {
     return res.redirect('/filmes/novo');
   }
   try {
-    const imagem = imagem_file ? ('/uploads/' + imagem_file.filename) : (imagem_url && imagem_url.trim() ? imagem_url.trim() : null);
-    const insertId = await Filme.salvar({ titulo: titulo.trim(), ano: ano ? parseInt(ano, 10) : null, categoria_id, imagem });
+    let imagem = imagem_file ? ('/uploads/' + imagem_file.filename) : (imagem_url && imagem_url.trim() ? imagem_url.trim() : null);
+    let imdb_rating = null;
+    // If no imagem provided and OMDb key available, try to fetch Poster and rating
+    const omdbKey = process.env.OMDB_API_KEY;
+    if ((!imagem || imagem === '') && omdbKey) {
+      try {
+        const q = `http://www.omdbapi.com/?t=${encodeURIComponent(titulo.trim())}` + (ano ? `&y=${encodeURIComponent(ano)}` : '') + `&apikey=${omdbKey}`;
+        const r = await axios.get(q);
+        if (r.data && r.data.Response === 'True') {
+          if (r.data.Poster && r.data.Poster !== 'N/A') imagem = r.data.Poster;
+          if (r.data.imdbRating && r.data.imdbRating !== 'N/A') imdb_rating = r.data.imdbRating;
+        }
+      } catch (e) {
+        console.warn('OMDb fetch failed:', e.message);
+      }
+    }
+    const insertId = await Filme.salvar({ titulo: titulo.trim(), ano: ano ? parseInt(ano, 10) : null, categoria_id, imagem, imdb_rating });
     req.flash('success_msg', 'Filme salvo.');
     // Redirect to edit page so user can see image URL/preview immediately
     res.redirect(`/filmes/editar/${insertId}`);
@@ -86,8 +102,23 @@ exports.atualizar = async (req, res) => {
     return res.redirect(`/filmes/editar/${id}`);
   }
   try {
-    const imagem = imagem_file ? ('/uploads/' + imagem_file.filename) : (imagem_url && imagem_url.trim() ? imagem_url.trim() : null);
-    await Filme.atualizar({ id, titulo: titulo.trim(), ano: ano ? parseInt(ano, 10) : null, categoria_id, imagem });
+    let imagem = imagem_file ? ('/uploads/' + imagem_file.filename) : (imagem_url && imagem_url.trim() ? imagem_url.trim() : null);
+    let imdb_rating = null;
+    const omdbKey = process.env.OMDB_API_KEY;
+    // If we don't have an imdb_rating yet (or imagem is a URL and we have key), try to refresh
+    if (omdbKey) {
+      try {
+        const q = `http://www.omdbapi.com/?t=${encodeURIComponent(titulo.trim())}` + (ano ? `&y=${encodeURIComponent(ano)}` : '') + `&apikey=${omdbKey}`;
+        const r = await axios.get(q);
+        if (r.data && r.data.Response === 'True') {
+          if ((!imagem || imagem === '') && r.data.Poster && r.data.Poster !== 'N/A') imagem = r.data.Poster;
+          if (r.data.imdbRating && r.data.imdbRating !== 'N/A') imdb_rating = r.data.imdbRating;
+        }
+      } catch (e) {
+        console.warn('OMDb fetch failed:', e.message);
+      }
+    }
+    await Filme.atualizar({ id, titulo: titulo.trim(), ano: ano ? parseInt(ano, 10) : null, categoria_id, imagem, imdb_rating });
     req.flash('success_msg', 'Filme atualizado.');
     res.redirect('/filmes');
   } catch (err) {
