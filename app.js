@@ -3,6 +3,7 @@ const path = require('path');
 const session = require('express-session');
 const flash = require('connect-flash');
 require('dotenv').config();
+console.log('DEBUG app: OMDB_API_KEY present=', !!process.env.OMDB_API_KEY);
 
 const app = express();
 

@@ -46,9 +46,12 @@ exports.salvar = async (req, res) => {
     let imdb_rating = null;
     // If no imagem provided, try to fetch Poster and rating from OMDb (helper)
     const omdbKey = process.env.OMDB_API_KEY;
+    console.log('DEBUG salvar: imagem_file=', !!imagem_file, 'imagem_url=', !!imagem_url, 'omdbKeyPresent=', !!omdbKey);
     if ((!imagem || imagem === '') && omdbKey) {
+      console.log('DEBUG salvar: calling OMDb for', titulo.trim(), 'year=', ano);
       try {
         const { poster, imdbRating } = await omdb.fetchPosterAndRating(titulo.trim(), ano, omdbKey);
+        console.log('DEBUG salvar: omdb result poster=', poster, 'imdbRating=', imdbRating);
         if (poster) imagem = poster;
         if (imdbRating) imdb_rating = imdbRating;
       } catch (e) {
