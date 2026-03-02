@@ -14,19 +14,30 @@
   <style>body{font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial}</style>
 </head>
 <body>
-  <header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-      <div class="container">
-        <a class="navbar-brand" href="/">PAW</a>
+  <header class="site-header">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top streaming-nav">
+      <div class="container-fluid px-4">
+        <a class="navbar-brand fw-bold text-uppercase" href="/">PAW<span class="text-danger">+</span></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item <%= currentPath === '/' ? 'active' : '' %>"><a class="nav-link" href="/">Home</a></li>
-            <li class="nav-item <%= currentPath && currentPath.startsWith('/categorias') ? 'active' : '' %>"><a class="nav-link" href="/categorias">Categorias</a></li>
-            <li class="nav-item <%= currentPath && currentPath.startsWith('/filmes') ? 'active' : '' %>"><a class="nav-link" href="/filmes">Filmes</a></li>
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item"><a class="nav-link" href="/">Início</a></li>
+            <li class="nav-item"><a class="nav-link" href="/categorias">Categorias</a></li>
+            <li class="nav-item"><a class="nav-link" href="/filmes">Filmes</a></li>
           </ul>
+
+          <form class="d-flex search-form me-3" role="search" action="/filmes" method="get">
+            <input class="form-control form-control-sm search-input" name="q" type="search" placeholder="Pesquisar filmes" aria-label="Pesquisar">
+            <button class="btn btn-sm btn-outline-light ms-2" type="submit"><i class="bi bi-search"></i></button>
+          </form>
+
+          <div class="nav-user d-flex align-items-center">
+            <a href="#" class="me-3 text-muted small">Olá, Usuário</a>
+            <div class="avatar bg-secondary rounded-circle text-white text-center">A</div>
+          </div>
         </div>
       </div>
     </nav>

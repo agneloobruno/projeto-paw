@@ -7,37 +7,30 @@
 
 <div class="main-card">
   <% if (filmes && filmes.length) { %>
-    <table class="table table-hover table-striped">
-      <thead>
-        <tr>
-          <th>Título</th>
-          <th>Ano</th>
-          <th>Categoria</th>
-          <th style="width:140px;text-align:right">Ações</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% filmes.forEach(function(f){ %>
-          <tr>
-            <td><%= f.titulo %></td>
-            <td>
-              <% if (f.ano) { %>
-                <span class="badge bg-info text-dark"><%= f.ano %></span>
-              <% } %>
-            </td>
-            <td><%= f.categoria || '—' %></td>
-            <td class="text-end">
-              <a href="/filmes/editar/<%= f.id %>" class="btn btn-sm btn-warning me-1" title="Editar">
-                <i class="bi bi-pencil"></i>
-              </a>
-              <a href="#" data-href="/filmes/excluir/<%= f.id %>" data-name="<%= f.titulo %>" class="btn btn-sm btn-danger btn-delete" title="Excluir">
-                <i class="bi bi-trash"></i>
-              </a>
-            </td>
-          </tr>
-        <% }) %>
-      </tbody>
-    </table>
+    <div class="movies-grid">
+      <% filmes.forEach(function(f){ %>
+        <div class="movie-card">
+          <div class="movie-badge"><% if (f.ano) { %><%= f.ano %><% } else { %>—<% } %></div>
+          <div class="movie-poster">
+            <div class="poster-title"><%= (f.titulo && f.titulo.length>20) ? (f.titulo.substring(0,18)+'...') : f.titulo %></div>
+          </div>
+          <div class="movie-meta">
+            <div class="movie-title"><%= f.titulo %></div>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="movie-cat"><%= f.categoria || '—' %></div>
+              <div>
+                <a href="/filmes/editar/<%= f.id %>" class="btn btn-sm btn-outline-warning me-1" title="Editar">
+                  <i class="bi bi-pencil"></i>
+                </a>
+                <a href="#" data-href="/filmes/excluir/<%= f.id %>" data-name="<%= f.titulo %>" class="btn btn-sm btn-danger btn-delete" title="Excluir">
+                  <i class="bi bi-trash"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
   <% } else { %>
     <div class="text-center py-4">
       <p class="mb-2">Nenhum filme cadastrado.</p>
