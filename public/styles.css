@@ -1,0 +1,10 @@
+
+body{margin:0;background:#f7f7f7}
+/* Content container override to look clean with Bootstrap */
+.container{max-width:1000px}
+.main-card{background:#fff;padding:20px;border-radius:6px;box-shadow:0 2px 6px rgba(0,0,0,0.06)}
+
+/* Flash overrides to use Bootstrap colors but slightly larger */
+.alert{margin-top:12px}
+
+

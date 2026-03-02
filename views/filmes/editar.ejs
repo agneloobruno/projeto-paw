@@ -1,0 +1,27 @@
+<%- include('../partials/header') %>
+
+<h1>Editar Filme</h1>
+
+<form action="/filmes/atualizar" method="post">
+  <input type="hidden" name="id" value="<%= filme.id %>" />
+
+  <label>Título</label>
+  <input type="text" name="titulo" value="<%= filme.titulo %>" required />
+
+  <label>Ano</label>
+  <input type="number" name="ano" value="<%= filme.ano || '' %>" />
+
+  <label>Categoria</label>
+  <select name="categoria_id" required>
+    <option value="">-- selecione --</option>
+    <% categorias.forEach(function(c){ %>
+      <option value="<%= c.id %>" <%= c.id == filme.categoria_id ? 'selected' : '' %>><%= c.nome %></option>
+    <% }) %>
+  </select>
+
+  <button type="submit">Atualizar</button>
+</form>
+
+<p><a href="/filmes">Voltar</a></p>
+
+<%- include('../partials/footer') %>

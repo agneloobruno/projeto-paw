@@ -1,0 +1,14 @@
+<%- include('../partials/header') %>
+
+<h1>Editar Categoria</h1>
+
+<form action="/categorias/atualizar" method="post">
+  <input type="hidden" name="id" value="<%= categoria.id %>" />
+  <label>Nome</label>
+  <input type="text" name="nome" value="<%= categoria.nome %>" required />
+  <button type="submit">Atualizar</button>
+</form>
+
+<p><a href="/categorias">Voltar</a></p>
+
+<%- include('../partials/footer') %>

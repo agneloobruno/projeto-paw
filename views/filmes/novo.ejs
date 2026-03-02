@@ -1,0 +1,25 @@
+<%- include('../partials/header') %>
+
+<h1>Novo Filme</h1>
+
+<form action="/filmes/salvar" method="post">
+  <label>Título</label>
+  <input type="text" name="titulo" required />
+
+  <label>Ano</label>
+  <input type="number" name="ano" />
+
+  <label>Categoria</label>
+  <select name="categoria_id" required>
+    <option value="">-- selecione --</option>
+    <% categorias.forEach(function(c){ %>
+      <option value="<%= c.id %>"><%= c.nome %></option>
+    <% }) %>
+  </select>
+
+  <button type="submit">Salvar</button>
+</form>
+
+<p><a href="/filmes">Voltar</a></p>
+
+<%- include('../partials/footer') %>

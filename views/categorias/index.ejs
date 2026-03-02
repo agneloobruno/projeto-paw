@@ -1,0 +1,26 @@
+<%- include('../partials/header') %>
+
+<h1>Categorias</h1>
+
+<form action="/categorias/salvar" method="post">
+  <input type="text" name="nome" placeholder="Nova categoria" required />
+  <button type="submit">Salvar</button>
+</form>
+
+<hr />
+
+<ul>
+  <% if (categorias && categorias.length) { %>
+    <% categorias.forEach(function(c) { %>
+      <li>
+        <%= c.nome %> 
+        <a href="/categorias/editar/<%= c.id %>">editar</a>
+        <a href="/categorias/excluir/<%= c.id %>" onclick="return confirm('Excluir?')">excluir</a>
+      </li>
+    <% }) %>
+  <% } else { %>
+    <li>Nenhuma categoria cadastrada.</li>
+  <% } %>
+</ul>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,30 @@
+<%- include('../partials/header') %>
+
+<h1>Filmes</h1>
+
+<p><a href="/filmes/novo">Novo filme</a></p>
+
+<table>
+  <thead>
+    <tr><th>Título</th><th>Ano</th><th>Categoria</th><th>Ações</th></tr>
+  </thead>
+  <tbody>
+    <% if (filmes && filmes.length) { %>
+      <% filmes.forEach(function(f){ %>
+        <tr>
+          <td><%= f.titulo %></td>
+          <td><%= f.ano || '' %></td>
+          <td><%= f.categoria || '—' %></td>
+          <td>
+            <a href="/filmes/editar/<%= f.id %>">editar</a>
+            <a href="/filmes/excluir/<%= f.id %>" onclick="return confirm('Excluir?')">excluir</a>
+          </td>
+        </tr>
+      <% }) %>
+    <% } else { %>
+      <tr><td colspan="4">Nenhum filme cadastrado.</td></tr>
+    <% } %>
+  </tbody>
+</table>
+
+<%- include('../partials/footer') %>
