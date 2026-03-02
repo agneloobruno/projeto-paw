@@ -9,16 +9,17 @@
   </form>
 </div>
 
-<div class="main-card">
+<div class="main-card p-3 position-relative">
   <% if (categorias && categorias.length) { %>
-    <div class="position-relative">
-      <button class="btn btn-sm btn-outline-light position-absolute" id="cat-prev" style="left:-10px;top:50%;transform:translateY(-50%);z-index:2"><i class="bi bi-chevron-left"></i></button>
-      <div class="categories-row" id="categoriesScroll">
-      <% categorias.forEach(function(c) { %>
-        <div class="category-tile">
+    <button id="cat-prev" class="carousel-btn carousel-prev" aria-label="Anterior"><i class="bi bi-chevron-left"></i></button>
+    <button id="cat-next" class="carousel-btn carousel-next" aria-label="Próximo"><i class="bi bi-chevron-right"></i></button>
+
+    <div class="categories-row" id="categoriesScroll">
+      <% categorias.forEach(function(c){ %>
+        <div class="category-tile" tabindex="0">
           <div>
             <div class="category-name"><%= c.nome %></div>
-            <div class="text-muted small">Ver filmes por categoria</div>
+            <div class="text-muted small"><%= c.count %> filmes</div>
           </div>
           <div class="category-actions d-flex justify-content-end">
             <a href="/categorias/editar/<%= c.id %>" class="btn btn-sm btn-outline-warning me-2" title="Editar"><i class="bi bi-pencil"></i></a>
@@ -26,18 +27,42 @@
           </div>
         </div>
       <% }) %>
-      </div>
-      <button class="btn btn-sm btn-outline-light position-absolute" id="cat-next" style="right:-10px;top:50%;transform:translateY(-50%);z-index:2"><i class="bi bi-chevron-right"></i></button>
-      <script>
-        document.addEventListener('DOMContentLoaded', function(){
-          var sc = document.getElementById('categoriesScroll');
-          var prev = document.getElementById('cat-prev');
-          var next = document.getElementById('cat-next');
-          prev.addEventListener('click', function(){ sc.scrollBy({ left: -260, behavior: 'smooth' }); });
-          next.addEventListener('click', function(){ sc.scrollBy({ left: 260, behavior: 'smooth' }); });
-        });
-      </script>
     </div>
+
+    <div class="carousel-fade left"></div>
+    <div class="carousel-fade right"></div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function(){
+        const sc = document.getElementById('categoriesScroll');
+        const prev = document.getElementById('cat-prev');
+        const next = document.getElementById('cat-next');
+
+        // Smooth scroll helpers
+        function pageScroll(direction){
+          const step = sc.clientWidth * 0.6; // scroll by 60% of visible area
+          sc.scrollBy({ left: direction * step, behavior: 'smooth' });
+        }
+
+        prev.addEventListener('click', () => pageScroll(-1));
+        next.addEventListener('click', () => pageScroll(1));
+
+        // enable / disable buttons depending on scroll pos
+        function updateButtons(){
+          prev.disabled = sc.scrollLeft <= 5;
+          next.disabled = sc.scrollLeft + sc.clientWidth >= sc.scrollWidth - 5;
+        }
+        sc.addEventListener('scroll', updateButtons);
+        window.addEventListener('resize', updateButtons);
+        updateButtons();
+
+        // keyboard navigation for accessibility
+        sc.addEventListener('keydown', (e) => {
+          if (e.key === 'ArrowLeft') pageScroll(-1);
+          if (e.key === 'ArrowRight') pageScroll(1);
+        });
+      });
+    </script>
   <% } else { %>
     <div class="text-center py-4">
       <p class="mb-2">Nenhuma categoria cadastrada.</p>

@@ -3,7 +3,13 @@ const Categoria = require('../models/categoria');
 exports.index = async (req, res) => {
   try {
     const categorias = await Categoria.listarTodas();
-    res.render('categorias/index', { title: 'Categorias', categorias });
+    // attach counts
+    const Filme = require('../models/filme');
+    const categoriasWithCount = await Promise.all(categorias.map(async (c) => {
+      const cnt = await Filme.contarPorCategoria(c.id);
+      return { ...c, count: cnt };
+    }));
+    res.render('categorias/index', { title: 'Categorias', categorias: categoriasWithCount });
   } catch (err) {
     req.flash('error_msg', 'Erro ao listar categorias.');
     res.redirect('/');

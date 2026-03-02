@@ -10,6 +10,18 @@ async function listarTodas() {
   return rows;
 }
 
+async function listarRecentes(limit = 8) {
+  const [rows] = await db.query(
+    `SELECT f.id, f.titulo, f.ano, f.categoria_id, f.imagem AS imagem, f.imdb_rating AS imdb_rating, c.nome AS categoria
+     FROM filmes f
+     LEFT JOIN categorias c ON f.categoria_id = c.id
+     ORDER BY f.id DESC
+     LIMIT ?`,
+    [limit]
+  );
+  return rows;
+}
+
 async function buscarPorId(id) {
   const [rows] = await db.query(
     `SELECT f.id, f.titulo, f.ano, f.categoria_id, f.imagem AS imagem, f.imdb_rating AS imdb_rating, c.nome AS categoria
@@ -54,4 +66,5 @@ module.exports = {
   atualizar,
   deletar,
   contarPorCategoria
+  , listarRecentes
 };
