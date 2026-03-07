@@ -66,7 +66,21 @@ exports.saveOmdbKey = async (req, res) => {
     // update runtime env
     process.env.OMDB_API_KEY = key;
     console.log('OMDb key saved via web UI');
-    return res.json({ ok: true });
+    // kick off a background job to fill posters/ratings
+    try {
+      console.log('Starting fill-posters job...');
+      exec('node scripts/fill-posters.js', { cwd: path.join(__dirname, '..'), maxBuffer: 1024 * 1024 }, (err, stdout, stderr) => {
+        if (err) {
+          console.error('fill-posters failed:', err, stderr);
+        } else {
+          console.log('fill-posters finished:', stdout ? stdout.toString().slice(0, 200) : '');
+        }
+      });
+    } catch (bgErr) {
+      console.error('Failed to start fill-posters:', bgErr);
+    }
+
+    return res.json({ ok: true, startedFill: true });
   } catch (err) {
     console.error('Error saving OMDb key:', err);
     return res.status(500).json({ ok: false, message: 'Erro ao salvar chave' });

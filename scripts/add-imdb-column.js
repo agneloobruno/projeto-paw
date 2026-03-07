@@ -1,6 +1,9 @@
 const db = require('../config/db');
 
+const waitForDb = require('./wait-db');
+
 async function run() {
+  await waitForDb();
   try {
     const [rows] = await db.query("SELECT COUNT(*) AS cnt FROM information_schema.columns WHERE table_schema = DATABASE() AND table_name = 'filmes' AND column_name = 'imdb_rating'");
     if (rows[0].cnt === 0) {

@@ -1,6 +1,9 @@
 const db = require('../config/db');
 
+const waitForDb = require('./wait-db');
+
 async function run() {
+  await waitForDb();
   try {
     // Categories (genres)
     const genres = [
@@ -43,12 +46,29 @@ async function run() {
     ];
 
     let inserted = 0;
+    const omdbKey = process.env.OMDB_API_KEY;
+    const { fetchPosterAndRating } = require('../utils/omdb');
     for (const [title, year, genre] of films) {
       const categoria_id = genreIds[genre] || null;
       // avoid duplicates by title and year
       const [exists] = await db.query('SELECT id FROM filmes WHERE titulo = ? AND ano = ?', [title, year]);
       if (exists.length) continue;
-      await db.query('INSERT INTO filmes (titulo, ano, categoria_id) VALUES (?, ?, ?)', [title, year, categoria_id]);
+
+      let poster = null;
+      let imdbRating = null;
+      if (omdbKey) {
+        try {
+          const result = await fetchPosterAndRating(title, year, omdbKey);
+          poster = result.poster;
+          imdbRating = result.imdbRating;
+        } catch (e) {
+          console.warn('OMDb lookup failed for', title, e && e.message ? e.message : e);
+        }
+        // be polite to the API
+        await new Promise(r => setTimeout(r, 250));
+      }
+
+      await db.query('INSERT INTO filmes (titulo, ano, categoria_id, imagem, imdb_rating) VALUES (?, ?, ?, ?, ?)', [title, year, categoria_id, poster, imdbRating]);
       inserted++;
     }
 
