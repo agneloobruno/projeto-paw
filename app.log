@@ -1,0 +1,223 @@
+nohup: ignorando entrada
+[dotenv@17.3.1] injecting env (7) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+DEBUG app: OMDB_API_KEY present= false
+[dotenv@17.3.1] injecting env (0) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+Server running on port 3006
+REQ GET /_health
+REQ GET /
+HOME: start handling
+Error in homeController.index: Error: Table 'paw_avaliacao.filmes' doesn't exist
+    at PromisePool.query (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at Object.listarRecentes (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/models/filme.js:14:27)
+    at exports.index (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/controllers/homeController.js:7:32)
+    at Layer.handleRequest (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/layer.js:152:17)
+    at next (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/route.js:117:3)
+    at handle (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/layer.js:152:17)
+    at /home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:295:15
+    at processParams (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:582:12) {
+  code: 'ER_NO_SUCH_TABLE',
+  errno: 1146,
+  sql: 'SELECT f.id, f.titulo, f.ano, f.categoria_id, f.imagem AS imagem, f.imdb_rating AS imdb_rating, c.nome AS categoria\n' +
+    '     FROM filmes f\n' +
+    '     LEFT JOIN categorias c ON f.categoria_id = c.id\n' +
+    '     ORDER BY f.id DESC\n' +
+    '     LIMIT 8',
+  sqlState: '42S02',
+  sqlMessage: "Table 'paw_avaliacao.filmes' doesn't exist"
+}
+(node:81773) [DEP0044] DeprecationWarning: The `util.isArray` API is deprecated. Please use `Array.isArray()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+REQ GET /.well-known/appspecific/com.chrome.devtools.json
+REQ GET /
+HOME: start handling
+Error in homeController.index: Error: Table 'paw_avaliacao.filmes' doesn't exist
+    at PromisePool.query (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at Object.listarRecentes (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/models/filme.js:14:27)
+    at exports.index (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/controllers/homeController.js:7:32)
+    at Layer.handleRequest (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/layer.js:152:17)
+    at next (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/route.js:117:3)
+    at handle (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/layer.js:152:17)
+    at /home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:295:15
+    at processParams (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:582:12) {
+  code: 'ER_NO_SUCH_TABLE',
+  errno: 1146,
+  sql: 'SELECT f.id, f.titulo, f.ano, f.categoria_id, f.imagem AS imagem, f.imdb_rating AS imdb_rating, c.nome AS categoria\n' +
+    '     FROM filmes f\n' +
+    '     LEFT JOIN categorias c ON f.categoria_id = c.id\n' +
+    '     ORDER BY f.id DESC\n' +
+    '     LIMIT 8',
+  sqlState: '42S02',
+  sqlMessage: "Table 'paw_avaliacao.filmes' doesn't exist"
+}
+REQ GET /.well-known/appspecific/com.chrome.devtools.json
+REQ GET /favicon.ico
+REQ GET /
+HOME: start handling
+Error in homeController.index: Error: Table 'paw_avaliacao.filmes' doesn't exist
+    at PromisePool.query (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at Object.listarRecentes (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/models/filme.js:14:27)
+    at exports.index (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/controllers/homeController.js:7:32)
+    at Layer.handleRequest (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/layer.js:152:17)
+    at next (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/route.js:117:3)
+    at handle (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/layer.js:152:17)
+    at /home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:295:15
+    at processParams (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:582:12) {
+  code: 'ER_NO_SUCH_TABLE',
+  errno: 1146,
+  sql: 'SELECT f.id, f.titulo, f.ano, f.categoria_id, f.imagem AS imagem, f.imdb_rating AS imdb_rating, c.nome AS categoria\n' +
+    '     FROM filmes f\n' +
+    '     LEFT JOIN categorias c ON f.categoria_id = c.id\n' +
+    '     ORDER BY f.id DESC\n' +
+    '     LIMIT 8',
+  sqlState: '42S02',
+  sqlMessage: "Table 'paw_avaliacao.filmes' doesn't exist"
+}
+REQ GET /categorias
+REQ GET /
+HOME: start handling
+Error in homeController.index: Error: Table 'paw_avaliacao.filmes' doesn't exist
+    at PromisePool.query (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at Object.listarRecentes (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/models/filme.js:14:27)
+    at exports.index (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/controllers/homeController.js:7:32)
+    at Layer.handleRequest (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/layer.js:152:17)
+    at next (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/route.js:117:3)
+    at handle (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/layer.js:152:17)
+    at /home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:295:15
+    at processParams (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:582:12) {
+  code: 'ER_NO_SUCH_TABLE',
+  errno: 1146,
+  sql: 'SELECT f.id, f.titulo, f.ano, f.categoria_id, f.imagem AS imagem, f.imdb_rating AS imdb_rating, c.nome AS categoria\n' +
+    '     FROM filmes f\n' +
+    '     LEFT JOIN categorias c ON f.categoria_id = c.id\n' +
+    '     ORDER BY f.id DESC\n' +
+    '     LIMIT 8',
+  sqlState: '42S02',
+  sqlMessage: "Table 'paw_avaliacao.filmes' doesn't exist"
+}
+REQ GET /filmes
+REQ GET /
+HOME: start handling
+Error in homeController.index: Error: Table 'paw_avaliacao.filmes' doesn't exist
+    at PromisePool.query (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at Object.listarRecentes (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/models/filme.js:14:27)
+    at exports.index (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/controllers/homeController.js:7:32)
+    at Layer.handleRequest (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/layer.js:152:17)
+    at next (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/route.js:117:3)
+    at handle (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/layer.js:152:17)
+    at /home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:295:15
+    at processParams (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:582:12) {
+  code: 'ER_NO_SUCH_TABLE',
+  errno: 1146,
+  sql: 'SELECT f.id, f.titulo, f.ano, f.categoria_id, f.imagem AS imagem, f.imdb_rating AS imdb_rating, c.nome AS categoria\n' +
+    '     FROM filmes f\n' +
+    '     LEFT JOIN categorias c ON f.categoria_id = c.id\n' +
+    '     ORDER BY f.id DESC\n' +
+    '     LIMIT 8',
+  sqlState: '42S02',
+  sqlMessage: "Table 'paw_avaliacao.filmes' doesn't exist"
+}
+REQ GET /categorias
+REQ GET /
+HOME: start handling
+Error in homeController.index: Error: Table 'paw_avaliacao.filmes' doesn't exist
+    at PromisePool.query (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at Object.listarRecentes (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/models/filme.js:14:27)
+    at exports.index (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/controllers/homeController.js:7:32)
+    at Layer.handleRequest (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/layer.js:152:17)
+    at next (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/route.js:117:3)
+    at handle (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/layer.js:152:17)
+    at /home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:295:15
+    at processParams (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:582:12) {
+  code: 'ER_NO_SUCH_TABLE',
+  errno: 1146,
+  sql: 'SELECT f.id, f.titulo, f.ano, f.categoria_id, f.imagem AS imagem, f.imdb_rating AS imdb_rating, c.nome AS categoria\n' +
+    '     FROM filmes f\n' +
+    '     LEFT JOIN categorias c ON f.categoria_id = c.id\n' +
+    '     ORDER BY f.id DESC\n' +
+    '     LIMIT 8',
+  sqlState: '42S02',
+  sqlMessage: "Table 'paw_avaliacao.filmes' doesn't exist"
+}
+REQ GET /
+HOME: start handling
+Error in homeController.index: Error: Table 'paw_avaliacao.filmes' doesn't exist
+    at PromisePool.query (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at Object.listarRecentes (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/models/filme.js:14:27)
+    at exports.index (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/controllers/homeController.js:7:32)
+    at Layer.handleRequest (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/layer.js:152:17)
+    at next (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/route.js:117:3)
+    at handle (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/layer.js:152:17)
+    at /home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:295:15
+    at processParams (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:582:12) {
+  code: 'ER_NO_SUCH_TABLE',
+  errno: 1146,
+  sql: 'SELECT f.id, f.titulo, f.ano, f.categoria_id, f.imagem AS imagem, f.imdb_rating AS imdb_rating, c.nome AS categoria\n' +
+    '     FROM filmes f\n' +
+    '     LEFT JOIN categorias c ON f.categoria_id = c.id\n' +
+    '     ORDER BY f.id DESC\n' +
+    '     LIMIT 8',
+  sqlState: '42S02',
+  sqlMessage: "Table 'paw_avaliacao.filmes' doesn't exist"
+}
+REQ GET /categorias
+REQ GET /
+HOME: start handling
+Error in homeController.index: Error: Table 'paw_avaliacao.filmes' doesn't exist
+    at PromisePool.query (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at Object.listarRecentes (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/models/filme.js:14:27)
+    at exports.index (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/controllers/homeController.js:7:32)
+    at Layer.handleRequest (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/layer.js:152:17)
+    at next (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/route.js:117:3)
+    at handle (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/layer.js:152:17)
+    at /home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:295:15
+    at processParams (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:582:12) {
+  code: 'ER_NO_SUCH_TABLE',
+  errno: 1146,
+  sql: 'SELECT f.id, f.titulo, f.ano, f.categoria_id, f.imagem AS imagem, f.imdb_rating AS imdb_rating, c.nome AS categoria\n' +
+    '     FROM filmes f\n' +
+    '     LEFT JOIN categorias c ON f.categoria_id = c.id\n' +
+    '     ORDER BY f.id DESC\n' +
+    '     LIMIT 8',
+  sqlState: '42S02',
+  sqlMessage: "Table 'paw_avaliacao.filmes' doesn't exist"
+}
+REQ GET /filmes
+REQ GET /
+HOME: start handling
+Error in homeController.index: Error: Table 'paw_avaliacao.filmes' doesn't exist
+    at PromisePool.query (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at Object.listarRecentes (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/models/filme.js:14:27)
+    at exports.index (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/controllers/homeController.js:7:32)
+    at Layer.handleRequest (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/layer.js:152:17)
+    at next (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/route.js:117:3)
+    at handle (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/layer.js:152:17)
+    at /home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:295:15
+    at processParams (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:582:12) {
+  code: 'ER_NO_SUCH_TABLE',
+  errno: 1146,
+  sql: 'SELECT f.id, f.titulo, f.ano, f.categoria_id, f.imagem AS imagem, f.imdb_rating AS imdb_rating, c.nome AS categoria\n' +
+    '     FROM filmes f\n' +
+    '     LEFT JOIN categorias c ON f.categoria_id = c.id\n' +
+    '     ORDER BY f.id DESC\n' +
+    '     LIMIT 8',
+  sqlState: '42S02',
+  sqlMessage: "Table 'paw_avaliacao.filmes' doesn't exist"
+}

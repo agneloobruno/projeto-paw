@@ -27,8 +27,16 @@ app.use((req, res, next) => {
   next();
 });
 
+// Simple request logger for debugging
+app.use((req, res, next) => {
+  console.log('REQ', req.method, req.path);
+  next();
+});
+
 const indexRouter = require('./routes/index');
 app.use('/', indexRouter);
+// healthcheck route
+app.get('/_health', (req, res) => res.send('ok'));
 const categoriasRouter = require('./routes/categorias');
 app.use('/categorias', categoriasRouter);
 const filmesRouter = require('./routes/filmes');
