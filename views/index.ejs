@@ -87,8 +87,8 @@
 					<div class="hero-sub"> <%= f0.categoria || '' %> <% if (f0.ano) { %> • <%= f0.ano %><% } %> <% if (f0.imdb_rating) { %> • <i class="bi bi-star-fill"></i> <%= f0.imdb_rating %><% } %></div>
 					<p class="hero-desc text-muted">Descubra trailers, avaliações e detalhes sobre este filme.</p>
 					<div class="hero-actions">
-						<a href="/filmes/editar/<%= f0.id %>" class="btn btn-primary btn-lg me-2">Assistir</a>
-						<a href="/filmes/editar/<%= f0.id %>" class="btn btn-outline-light btn-lg">+ Minha lista</a>
+						<a href="/filmes/editar/<%= f0.id %>" class="btn btn-primary btn-lg me-2" aria-label="Assistir <%= f0.titulo %>"><i class="bi bi-play-fill me-1"></i> Assistir</a>
+						<a href="/filmes/editar/<%= f0.id %>" class="btn btn-outline-light btn-lg" aria-label="Adicionar <%= f0.titulo %> à minha lista"><i class="bi bi-plus-lg me-1"></i> Minha lista</a>
 					</div>
 				</div>
 			</div>

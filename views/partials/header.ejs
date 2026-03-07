@@ -11,7 +11,6 @@
   <!-- Bootstrap Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <link rel="stylesheet" href="/styles.css" />
-  <style>body{font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial}</style>
 </head>
 <body>
   <header class="site-header">
@@ -30,9 +29,9 @@
           </ul>
 
           <form class="d-flex search-form me-3 position-relative" role="search" action="/filmes" method="get">
-            <input id="searchInput" class="form-control form-control-sm search-input" name="q" type="search" placeholder="Pesquisar filmes" aria-label="Pesquisar" autocomplete="off">
+            <input id="searchInput" class="form-control form-control-sm search-input" name="q" type="search" placeholder="Pesquisar filmes" aria-label="Pesquisar" autocomplete="off" aria-autocomplete="list" aria-controls="searchSuggestions">
             <button class="btn btn-sm btn-outline-light ms-2" type="submit"><i class="bi bi-search"></i></button>
-            <div id="searchSuggestions" class="list-group position-absolute" style="z-index:1050; top:36px; left:0; right:40px; display:none; max-height:360px; overflow:auto;"></div>
+            <div id="searchSuggestions" role="listbox" aria-label="Sugestões de filmes" class="list-group position-absolute" style="z-index:1050; top:36px; left:0; right:40px; display:none; max-height:360px; overflow:auto;"></div>
           </form>
 
           <div class="nav-user d-flex align-items-center">
@@ -65,27 +64,59 @@
       const box = document.getElementById('searchSuggestions');
       if (!input || !box) return;
       let timeout = null;
+      let activeIndex = -1;
+
+      function clearSuggestions(){ box.style.display='none'; box.innerHTML=''; activeIndex = -1; }
+
+      async function fetchSuggestions(v){
+        try {
+          const res = await fetch('/filmes/suggest?q=' + encodeURIComponent(v));
+          if (!res.ok) throw new Error('err');
+          const arr = await res.json();
+          return arr || [];
+        } catch(e){ return []; }
+      }
+
       input.addEventListener('input', function(){
         const v = input.value.trim();
         if (timeout) clearTimeout(timeout);
-        if (!v || v.length < 2) { box.style.display='none'; box.innerHTML=''; return; }
-            timeout = setTimeout(async ()=>{
-          try {
-            const res = await fetch('/filmes/suggest?q=' + encodeURIComponent(v));
-            if (!res.ok) throw new Error('err');
-            const arr = await res.json();
-            if (!arr || !arr.length) { box.style.display='none'; box.innerHTML=''; return; }
-            box.innerHTML = arr.map(a=> {
-              const img = a.imagem ? `<img src=\"${a.imagem}\" style=\"width:40px;height:56px;object-fit:cover;border-radius:4px;margin-right:8px;vertical-align:middle\" alt=\"\"/>` : `<div style=\"width:40px;height:56px;display:inline-block;background:#222;border-radius:4px;margin-right:8px;vertical-align:middle\"></div>`;
-              return `<a href=\"/filmes?q=${encodeURIComponent(a.titulo)}\" class=\"list-group-item list-group-item-action d-flex align-items-center\">${img}<span>${a.titulo}</span></a>`
-            }).join('');
-            box.style.display = 'block';
-          } catch(e) {
-            box.style.display='none'; box.innerHTML='';
-          }
-        }, 250);
+        if (!v || v.length < 2) { clearSuggestions(); return; }
+        timeout = setTimeout(async ()=>{
+          const arr = await fetchSuggestions(v);
+          if (!arr.length) { clearSuggestions(); return; }
+          box.innerHTML = arr.map((a, idx)=> {
+            const img = a.imagem ? `<img src="${a.imagem}" alt=""/>` : `<div style="width:40px;height:56px;display:inline-block;background:#222;border-radius:4px;margin-right:8px"></div>`;
+            return `<a href="/filmes?q=${encodeURIComponent(a.titulo)}" role="option" data-index="${idx}" tabindex="0" class="list-group-item list-group-item-action d-flex align-items-center">${img}<span>${a.titulo}</span></a>`
+          }).join('');
+          box.style.display = 'block';
+          activeIndex = -1;
+        }, 200);
       });
+
+      // keyboard navigation
+      input.addEventListener('keydown', function(e){
+        const items = Array.from(box.querySelectorAll('[role="option"]'));
+        if (!items.length) return;
+        if (e.key === 'ArrowDown'){
+          e.preventDefault();
+          activeIndex = Math.min(items.length - 1, activeIndex + 1);
+          items[activeIndex].focus();
+        } else if (e.key === 'ArrowUp'){
+          e.preventDefault();
+          activeIndex = Math.max(0, activeIndex - 1);
+          items[activeIndex].focus();
+        } else if (e.key === 'Escape'){
+          clearSuggestions();
+        }
+      });
+
+      // click/selection handlers
+      box.addEventListener('click', function(e){
+        const a = e.target.closest('a');
+        if (a) { /* let anchor navigate */ }
+      });
+
       // hide on outside click
-      document.addEventListener('click', function(e){ if (!input.contains(e.target) && !box.contains(e.target)) { box.style.display='none'; } });
+      document.addEventListener('click', function(e){ if (!input.contains(e.target) && !box.contains(e.target)) { clearSuggestions(); } });
     })();
   </script>
