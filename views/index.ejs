@@ -1,5 +1,82 @@
 <%- include('partials/header') %>
 
+<!-- OMDb info carousel + API key input -->
+<section class="mb-4">
+	<div id="omdbCarousel" class="carousel slide mb-3" data-bs-ride="carousel">
+		<div class="carousel-inner">
+			<div class="carousel-item active">
+				<div class="p-4 bg-dark text-white rounded">
+					<h4>Chave OMDb necessária</h4>
+					<p>Para que a aplicação busque pôsters e avaliações automaticamente, forneça uma chave de API gratuita obtida em <a href="https://www.omdbapi.com/" target="_blank" class="text-info">OMDb</a>.</p>
+				</div>
+			</div>
+			<div class="carousel-item">
+				<div class="p-4 bg-dark text-white rounded">
+					<h4>Como obter</h4>
+					<p>Cadastre-se no site e gere sua chave. Cole-a abaixo — não demora.</p>
+				</div>
+			</div>
+			<div class="carousel-item">
+				<div class="p-4 bg-dark text-white rounded">
+					<h4>Popular com clássicos</h4>
+					<p>Após fornecer a chave, um botão será liberado para popular o catálogo com 20 clássicos do cinema.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="d-flex gap-2 align-items-center mb-4">
+		<input id="omdbKeyInput" class="form-control form-control-sm" placeholder="Cole sua OMDb API key aqui" value="<%= typeof omdbKeyPresent !== 'undefined' && omdbKeyPresent ? '••••••••' : '' %>" />
+		<button id="saveOmdbBtn" class="btn btn-primary btn-sm">Salvar chave</button>
+		<button id="seedBtn" class="btn btn-success btn-sm" disabled>Popular 20 clássicos</button>
+		<div id="omdbStatus" class="ms-3 small text-muted"></div>
+	</div>
+
+	<script>
+		(function(){
+			const keyInput = document.getElementById('omdbKeyInput');
+			const saveBtn = document.getElementById('saveOmdbBtn');
+			const seedBtn = document.getElementById('seedBtn');
+			const status = document.getElementById('omdbStatus');
+			const keyPresent = <%= (typeof omdbKeyPresent !== 'undefined' && omdbKeyPresent) ? 'true' : 'false' %>;
+			if (keyPresent) seedBtn.disabled = false;
+
+			saveBtn.addEventListener('click', async function(){
+				const key = keyInput.value.trim();
+				if (!key) { status.textContent = 'Chave vazia'; return; }
+				status.textContent = 'Salvando...';
+				try {
+					const res = await fetch('/omdb-key', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ key }) });
+					const j = await res.json();
+					if (j.ok) {
+						status.textContent = 'Chave salva.';
+						seedBtn.disabled = false;
+					} else {
+						status.textContent = j.message || 'Erro ao salvar';
+					}
+				} catch (e) { status.textContent = 'Erro de rede'; }
+			});
+
+			seedBtn.addEventListener('click', async function(){
+				if (!confirm('Executar script para popular 20 clássicos?')) return;
+				seedBtn.disabled = true;
+				status.textContent = 'Executando seed...';
+				try {
+					const res = await fetch('/seed-classics', { method: 'POST' });
+					const j = await res.json();
+					if (j.ok) {
+						status.textContent = 'Seed concluído.';
+						// reload page to show inserted films
+						setTimeout(()=> location.reload(), 1000);
+					} else {
+						status.textContent = j.message || 'Erro no seed';
+						seedBtn.disabled = false;
+					}
+				} catch (e) { status.textContent = 'Erro de rede'; seedBtn.disabled = false; }
+			});
+		})();
+	</script>
+
 <section class="mb-4">
 	<div class="main-card p-4 d-flex align-items-center" style="gap:18px">
 		<% if (filmes && filmes.length) { %>
