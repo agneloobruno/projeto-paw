@@ -10,6 +10,15 @@ async function listarTodas() {
   return rows;
 }
 
+async function suggest(query, limit = 10) {
+  const q = `%${query.replace(/%/g, '\\%')}%`;
+  const [rows] = await db.query(
+    `SELECT id, titulo, imagem FROM filmes WHERE titulo LIKE ? ORDER BY titulo LIMIT ?`,
+    [q, limit]
+  );
+  return rows;
+}
+
 async function listarRecentes(limit = 8) {
   const [rows] = await db.query(
     `SELECT f.id, f.titulo, f.ano, f.categoria_id, f.imagem AS imagem, f.imdb_rating AS imdb_rating, c.nome AS categoria
@@ -67,4 +76,5 @@ module.exports = {
   deletar,
   contarPorCategoria
   , listarRecentes
+  , suggest
 };

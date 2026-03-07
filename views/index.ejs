@@ -77,54 +77,45 @@
 		})();
 	</script>
 
-<section class="mb-4">
-	<div class="main-card p-4 d-flex align-items-center" style="gap:18px">
-		<% if (filmes && filmes.length) { %>
-			<div style="flex:1;min-width:320px">
-				<h2 class="h4 mb-2">Em destaque</h2>
-				<div class="d-flex gap-3">
-					<% filmes.slice(0,1).forEach(function(f){ %>
-						<div style="max-width:420px">
-							<% if (f.imagem) { %>
-								<img src="<%= f.imagem %>" alt="<%= f.titulo %>" style="width:100%;height:260px;object-fit:cover;border-radius:8px;" />
-							<% } else { %>
-								<img src="/images/poster-placeholder.svg" alt="placeholder" style="width:100%;height:260px;object-fit:cover;border-radius:8px;" />
-							<% } %>
-						</div>
-					<% }) %>
-					<div style="flex:1">
-						<h3 class="movie-title mb-1"><%= filmes[0] ? filmes[0].titulo : '' %></h3>
-						<div class="text-muted mb-2"><%= filmes[0] ? (filmes[0].categoria || '') + (filmes[0].ano ? ' • ' + filmes[0].ano : '') : '' %></div>
-						<p class="text-muted small">Descubra trailers, avaliações e mais.</p>
+<section class="hero-section mb-4">
+	<% if (filmes && filmes.length && filmes[0]) { const f0 = filmes[0]; %>
+		<div class="hero" style="background-image: url('<%= f0.imagem ? f0.imagem : '/images/poster-placeholder.svg' %>')">
+			<div class="hero-overlay"></div>
+			<div class="hero-content container">
+				<div class="hero-meta-row">
+					<h1 class="hero-title"><%= f0.titulo %></h1>
+					<div class="hero-sub"> <%= f0.categoria || '' %> <% if (f0.ano) { %> • <%= f0.ano %><% } %> <% if (f0.imdb_rating) { %> • <i class="bi bi-star-fill"></i> <%= f0.imdb_rating %><% } %></div>
+					<p class="hero-desc text-muted">Descubra trailers, avaliações e detalhes sobre este filme.</p>
+					<div class="hero-actions">
+						<a href="/filmes/editar/<%= f0.id %>" class="btn btn-primary btn-lg me-2">Assistir</a>
+						<a href="/filmes/editar/<%= f0.id %>" class="btn btn-outline-light btn-lg">+ Minha lista</a>
 					</div>
 				</div>
 			</div>
-			<div style="flex:1">
-				<h2 class="h5 mb-2">Novidades</h2>
-				<div class="movies-grid">
-					<% filmes.forEach(function(f,i){ %>
-						<div class="movie-card <%='cat-'+(i%6)%>" >
-							<div class="movie-poster">
-								<% if (f.imagem) { %>
-									<img src="<%= f.imagem %>" alt="<%= f.titulo %>" />
-								<% } else { %>
-									<img src="/images/poster-placeholder.svg" alt="placeholder" />
-								<% } %>
-							</div>
-							<div class="movie-meta">
-								<div class="movie-title"><%= f.titulo %></div>
-								<div class="movie-cat"><%= f.categoria || '' %> <% if (f.ano) { %>• <%= f.ano %><% } %></div>
-							</div>
+		</div>
+	<% } %>
+
+	<div class="container mt-4">
+		<h2 class="section-title mb-3">Novidades</h2>
+		<div class="poster-grid">
+			<% if (filmes && filmes.length) { filmes.forEach(function(f){ %>
+				<div class="poster-card">
+					<a href="/filmes/editar/<%= f.id %>" class="poster-link">
+						<% if (f.imagem) { %>
+							<img src="<%= f.imagem %>" alt="<%= f.titulo %>" class="poster-img" />
+						<% } else { %>
+							<img src="/images/poster-placeholder.svg" alt="placeholder" class="poster-img" />
+						<% } %>
+						<div class="poster-overlay">
+							<div class="poster-title"><%= f.titulo %></div>
 							<% if (f.imdb_rating) { %>
-								<div class="movie-badge"><i class="bi bi-star-fill"></i> <%= f.imdb_rating %></div>
+								<div class="poster-rating"><i class="bi bi-star-fill"></i> <%= f.imdb_rating %></div>
 							<% } %>
 						</div>
-					<% }) %>
+					</a>
 				</div>
-			</div>
-		<% } else { %>
-			<div class="text-center p-4">Nenhum filme encontrado.</div>
-		<% } %>
+			<% }) } %>
+		</div>
 	</div>
 </section>
 

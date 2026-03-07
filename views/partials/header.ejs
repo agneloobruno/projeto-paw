@@ -29,9 +29,10 @@
             <li class="nav-item"><a class="nav-link" href="/filmes">Filmes</a></li>
           </ul>
 
-          <form class="d-flex search-form me-3" role="search" action="/filmes" method="get">
-            <input class="form-control form-control-sm search-input" name="q" type="search" placeholder="Pesquisar filmes" aria-label="Pesquisar">
+          <form class="d-flex search-form me-3 position-relative" role="search" action="/filmes" method="get">
+            <input id="searchInput" class="form-control form-control-sm search-input" name="q" type="search" placeholder="Pesquisar filmes" aria-label="Pesquisar" autocomplete="off">
             <button class="btn btn-sm btn-outline-light ms-2" type="submit"><i class="bi bi-search"></i></button>
+            <div id="searchSuggestions" class="list-group position-absolute" style="z-index:1050; top:36px; left:0; right:40px; display:none; max-height:360px; overflow:auto;"></div>
           </form>
 
           <div class="nav-user d-flex align-items-center">
@@ -57,3 +58,34 @@
   <div class="container mt-5 pt-4">
 
   <%- include('./_msg') %>
+
+  <script>
+    (function(){
+      const input = document.getElementById('searchInput');
+      const box = document.getElementById('searchSuggestions');
+      if (!input || !box) return;
+      let timeout = null;
+      input.addEventListener('input', function(){
+        const v = input.value.trim();
+        if (timeout) clearTimeout(timeout);
+        if (!v || v.length < 2) { box.style.display='none'; box.innerHTML=''; return; }
+            timeout = setTimeout(async ()=>{
+          try {
+            const res = await fetch('/filmes/suggest?q=' + encodeURIComponent(v));
+            if (!res.ok) throw new Error('err');
+            const arr = await res.json();
+            if (!arr || !arr.length) { box.style.display='none'; box.innerHTML=''; return; }
+            box.innerHTML = arr.map(a=> {
+              const img = a.imagem ? `<img src=\"${a.imagem}\" style=\"width:40px;height:56px;object-fit:cover;border-radius:4px;margin-right:8px;vertical-align:middle\" alt=\"\"/>` : `<div style=\"width:40px;height:56px;display:inline-block;background:#222;border-radius:4px;margin-right:8px;vertical-align:middle\"></div>`;
+              return `<a href=\"/filmes?q=${encodeURIComponent(a.titulo)}\" class=\"list-group-item list-group-item-action d-flex align-items-center\">${img}<span>${a.titulo}</span></a>`
+            }).join('');
+            box.style.display = 'block';
+          } catch(e) {
+            box.style.display='none'; box.innerHTML='';
+          }
+        }, 250);
+      });
+      // hide on outside click
+      document.addEventListener('click', function(e){ if (!input.contains(e.target) && !box.contains(e.target)) { box.style.display='none'; } });
+    })();
+  </script>

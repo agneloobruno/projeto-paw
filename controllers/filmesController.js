@@ -20,6 +20,25 @@ exports.index = async (req, res) => {
   }
 };
 
+exports.suggest = async (req, res) => {
+  try {
+    const q = (req.query.q || '').trim();
+    if (!q || q.length < 2) return res.json([]);
+    const rows = await Filme.suggest(q, 10);
+    const host = req.get('host');
+    const protocol = req.protocol;
+    const out = rows.map(r => {
+      let img = r.imagem || null;
+      if (img && img.startsWith('/')) img = `${protocol}://${host}${img}`;
+      return { id: r.id, titulo: r.titulo, imagem: img };
+    });
+    return res.json(out);
+  } catch (err) {
+    console.error('Error in filmes.suggest:', err);
+    return res.status(500).json([]);
+  }
+};
+
 exports.novo = async (req, res) => {
   try {
     const categorias = await Categoria.listarTodas();

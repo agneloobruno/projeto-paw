@@ -17,6 +17,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 router.get('/', ctrl.index);
+router.get('/suggest', ctrl.suggest);
 router.get('/novo', ctrl.novo);
 router.post('/salvar', upload.single('imagem_file'), ctrl.salvar);
 router.get('/editar/:id', ctrl.editar);
