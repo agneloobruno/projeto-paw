@@ -170,15 +170,22 @@
 		<h2 class="h5 mb-0">Categorias</h2>
 		<a href="/categorias" class="btn btn-sm btn-outline-light">Ver todas</a>
 	</div>
-	<div class="categories-row">
+	<div class="categories-grid">
 		<% if (categorias && categorias.length) { %>
 			<% categorias.forEach(function(c){ %>
-				<div class="category-tile">
-					<div>
+				<div class="category-tile" role="group" aria-label="Categoria <%= c.nome %>">
+					<% if (c.image) { %>
+					  <div class="category-bg" style="background-image:url('<%= c.image %>')"></div>
+					<% } %>
+					<div class="category-overlay"></div>
+					<div class="category-center">
+						<div class="category-icon">
+							<i class="<%= c.icon || 'bi bi-film' %>" aria-hidden="true"></i>
+						</div>
 						<div class="category-name"><%= c.nome %></div>
-						<div class="text-muted small"><%= c.count %> filmes</div>
+						<div class="category-sub"><%= c.count %> filmes</div>
 					</div>
-					<div class="category-actions d-flex justify-content-end">
+					<div class="category-actions">
 						<a href="/categorias/editar/<%= c.id %>" class="btn btn-sm btn-outline-warning me-2" title="Editar"><i class="bi bi-pencil"></i></a>
 						<a href="#" data-href="/categorias/excluir/<%= c.id %>" data-name="<%= c.nome %>" class="btn btn-sm btn-danger btn-delete" title="Excluir"><i class="bi bi-trash"></i></a>
 					</div>

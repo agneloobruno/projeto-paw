@@ -4,6 +4,29 @@ const waitForDb = require('./wait-db');
 
 async function run() {
   await waitForDb();
+  // Ensure tables exist (idempotent) so seed can run even on a fresh DB
+  try {
+    await db.query(`
+      CREATE TABLE IF NOT EXISTS categorias (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        nome VARCHAR(100) NOT NULL
+      ) ENGINE=InnoDB;
+    `);
+    await db.query(`
+      CREATE TABLE IF NOT EXISTS filmes (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        titulo VARCHAR(150) NOT NULL,
+        ano INT,
+        categoria_id INT,
+        imagem VARCHAR(255) NULL,
+        imdb_rating VARCHAR(16) NULL,
+        INDEX (categoria_id),
+        CONSTRAINT fk_filmes_categoria FOREIGN KEY (categoria_id) REFERENCES categorias(id) ON DELETE CASCADE
+      ) ENGINE=InnoDB;
+    `);
+  } catch (ensureErr) {
+    console.warn('Could not ensure tables exist (continuing):', ensureErr && ensureErr.message ? ensureErr.message : ensureErr);
+  }
   try {
     // Categories (genres)
     const genres = [
@@ -68,7 +91,11 @@ async function run() {
         await new Promise(r => setTimeout(r, 250));
       }
 
-      await db.query('INSERT INTO filmes (titulo, ano, categoria_id, imagem, imdb_rating) VALUES (?, ?, ?, ?, ?)', [title, year, categoria_id, poster, imdbRating]);
+      try {
+        await db.query('INSERT INTO filmes (titulo, ano, categoria_id, imagem, imdb_rating) VALUES (?, ?, ?, ?, ?)', [title, year, categoria_id, poster, imdbRating]);
+      } catch (insErr) {
+        console.warn('Failed to insert', title, insErr && insErr.message ? insErr.message : insErr);
+      }
       inserted++;
     }
 

@@ -755,3 +755,605 @@ HOME: count for 6 = 3
 HOME: count for 4 = 1
 HOME: count for 10 = 1
 HOME: rendering home, filmes count= 8
+REQ GET /
+HOME: start handling
+Error in homeController.index: Error: Table 'paw_avaliacao.filmes' doesn't exist
+    at PromisePool.query (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at Object.listarRecentes (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/models/filme.js:23:27)
+    at exports.index (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/controllers/homeController.js:10:32)
+    at Layer.handleRequest (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/layer.js:152:17)
+    at next (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/route.js:117:3)
+    at handle (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/layer.js:152:17)
+    at /home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:295:15
+    at processParams (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:582:12) {
+  code: 'ER_NO_SUCH_TABLE',
+  errno: 1146,
+  sql: 'SELECT f.id, f.titulo, f.ano, f.categoria_id, f.imagem AS imagem, f.imdb_rating AS imdb_rating, c.nome AS categoria\n' +
+    '     FROM filmes f\n' +
+    '     LEFT JOIN categorias c ON f.categoria_id = c.id\n' +
+    '     ORDER BY f.id DESC\n' +
+    '     LIMIT 8',
+  sqlState: '42S02',
+  sqlMessage: "Table 'paw_avaliacao.filmes' doesn't exist"
+}
+REQ GET /
+HOME: start handling
+Error in homeController.index: Error: Table 'paw_avaliacao.filmes' doesn't exist
+    at PromisePool.query (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at Object.listarRecentes (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/models/filme.js:23:27)
+    at exports.index (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/controllers/homeController.js:10:32)
+    at Layer.handleRequest (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/layer.js:152:17)
+    at next (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/route.js:117:3)
+    at handle (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/layer.js:152:17)
+    at /home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:295:15
+    at processParams (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:582:12) {
+  code: 'ER_NO_SUCH_TABLE',
+  errno: 1146,
+  sql: 'SELECT f.id, f.titulo, f.ano, f.categoria_id, f.imagem AS imagem, f.imdb_rating AS imdb_rating, c.nome AS categoria\n' +
+    '     FROM filmes f\n' +
+    '     LEFT JOIN categorias c ON f.categoria_id = c.id\n' +
+    '     ORDER BY f.id DESC\n' +
+    '     LIMIT 8',
+  sqlState: '42S02',
+  sqlMessage: "Table 'paw_avaliacao.filmes' doesn't exist"
+}
+REQ POST /omdb-key
+OMDb key saved via web UI
+Starting fill-posters job...
+fill-posters failed: Error: Command failed: node scripts/fill-posters.js
+Error: Error: Table 'paw_avaliacao.filmes' doesn't exist
+    at PromisePool.query (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at run (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/scripts/fill-posters.js:15:29)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5) {
+  code: 'ER_NO_SUCH_TABLE',
+  errno: 1146,
+  sql: 'SELECT id, titulo, ano FROM filmes WHERE imagem IS NULL OR imdb_rating IS NULL',
+  sqlState: '42S02',
+  sqlMessage: "Table 'paw_avaliacao.filmes' doesn't exist"
+}
+
+    at genericNodeError (node:internal/errors:985:15)
+    at wrappedFn (node:internal/errors:539:14)
+    at ChildProcess.exithandler (node:child_process:417:12)
+    at ChildProcess.emit (node:events:508:28)
+    at maybeClose (node:internal/child_process:1101:16)
+    at ChildProcess._handle.onexit (node:internal/child_process:305:5) {
+  code: 1,
+  killed: false,
+  signal: null,
+  cmd: 'node scripts/fill-posters.js'
+} Error: Error: Table 'paw_avaliacao.filmes' doesn't exist
+    at PromisePool.query (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at run (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/scripts/fill-posters.js:15:29)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5) {
+  code: 'ER_NO_SUCH_TABLE',
+  errno: 1146,
+  sql: 'SELECT id, titulo, ano FROM filmes WHERE imagem IS NULL OR imdb_rating IS NULL',
+  sqlState: '42S02',
+  sqlMessage: "Table 'paw_avaliacao.filmes' doesn't exist"
+}
+
+REQ POST /seed-classics
+Seed error: Error: Command failed: node scripts/seed-classics.js
+Erro no seed: Error: Table 'paw_avaliacao.categorias' doesn't exist
+    at PromisePool.query (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at run (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/scripts/seed-classics.js:15:31)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5) {
+  code: 'ER_NO_SUCH_TABLE',
+  errno: 1146,
+  sql: "SELECT id FROM categorias WHERE nome = 'Drama'",
+  sqlState: '42S02',
+  sqlMessage: "Table 'paw_avaliacao.categorias' doesn't exist"
+}
+
+    at genericNodeError (node:internal/errors:985:15)
+    at wrappedFn (node:internal/errors:539:14)
+    at ChildProcess.exithandler (node:child_process:417:12)
+    at ChildProcess.emit (node:events:508:28)
+    at maybeClose (node:internal/child_process:1101:16)
+    at ChildProcess._handle.onexit (node:internal/child_process:305:5) {
+  code: 1,
+  killed: false,
+  signal: null,
+  cmd: 'node scripts/seed-classics.js'
+}
+REQ GET /
+HOME: start handling
+HOME: fetched filmes count= 8
+HOME: fetched categorias count= 10
+HOME: counting for categoria 5
+HOME: counting for categoria 3
+HOME: counting for categoria 2
+HOME: counting for categoria 1
+HOME: counting for categoria 7
+HOME: counting for categoria 8
+HOME: counting for categoria 4
+HOME: counting for categoria 6
+HOME: counting for categoria 9
+HOME: counting for categoria 10
+HOME: count for 5 = 1
+HOME: count for 6 = 3
+HOME: count for 4 = 1
+HOME: count for 9 = 1
+HOME: count for 2 = 3
+HOME: count for 3 = 2
+HOME: count for 8 = 1
+HOME: count for 1 = 6
+HOME: count for 7 = 1
+HOME: count for 10 = 1
+HOME: rendering home, filmes count= 8
+REQ GET /
+HOME: start handling
+HOME: fetched filmes count= 8
+HOME: fetched categorias count= 10
+HOME: counting for categoria 5
+HOME: counting for categoria 3
+HOME: counting for categoria 2
+HOME: counting for categoria 1
+HOME: counting for categoria 7
+HOME: counting for categoria 8
+HOME: counting for categoria 4
+HOME: counting for categoria 6
+HOME: counting for categoria 9
+HOME: counting for categoria 10
+HOME: count for 8 = 1
+HOME: count for 3 = 2
+HOME: count for 10 = 1
+HOME: count for 4 = 1
+HOME: count for 7 = 1
+HOME: count for 2 = 3
+HOME: count for 6 = 3
+HOME: count for 1 = 6
+HOME: count for 5 = 1
+HOME: count for 9 = 1
+HOME: rendering home, filmes count= 8
+REQ GET /
+HOME: start handling
+Error in homeController.index: Error: connect ECONNREFUSED 127.0.0.1:3306
+    at PromisePool.query (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at Object.listarRecentes (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/models/filme.js:23:27)
+    at exports.index (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/controllers/homeController.js:10:32)
+    at Layer.handleRequest (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/layer.js:152:17)
+    at next (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/route.js:117:3)
+    at handle (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/layer.js:152:17)
+    at /home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:295:15
+    at processParams (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:582:12) {
+  code: 'ECONNREFUSED',
+  errno: -111,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+REQ GET /
+HOME: start handling
+Error in homeController.index: Error: connect ECONNREFUSED 127.0.0.1:3306
+    at PromisePool.query (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at Object.listarRecentes (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/models/filme.js:23:27)
+    at exports.index (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/controllers/homeController.js:10:32)
+    at Layer.handleRequest (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/layer.js:152:17)
+    at next (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/route.js:117:3)
+    at handle (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/layer.js:152:17)
+    at /home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:295:15
+    at processParams (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:582:12) {
+  code: 'ECONNREFUSED',
+  errno: -111,
+  sql: undefined,
+  sqlState: undefined,
+  sqlMessage: undefined
+}
+REQ POST /omdb-key
+OMDb key saved via web UI
+Starting fill-posters job...
+REQ POST /seed-classics
+fill-posters failed: Error: Command failed: node scripts/fill-posters.js
+/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/scripts/wait-db.js:25
+  throw new Error('Database did not become ready in time');
+        ^
+
+Error: Database did not become ready in time
+    at waitForDb (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/scripts/wait-db.js:25:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async run (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/scripts/fill-posters.js:7:3)
+
+Node.js v24.13.0
+
+    at genericNodeError (node:internal/errors:985:15)
+    at wrappedFn (node:internal/errors:539:14)
+    at ChildProcess.exithandler (node:child_process:417:12)
+    at ChildProcess.emit (node:events:508:28)
+    at maybeClose (node:internal/child_process:1101:16)
+    at ChildProcess._handle.onexit (node:internal/child_process:305:5) {
+  code: 1,
+  killed: false,
+  signal: null,
+  cmd: 'node scripts/fill-posters.js'
+} /home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/scripts/wait-db.js:25
+  throw new Error('Database did not become ready in time');
+        ^
+
+Error: Database did not become ready in time
+    at waitForDb (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/scripts/wait-db.js:25:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async run (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/scripts/fill-posters.js:7:3)
+
+Node.js v24.13.0
+
+Seed error: Error: Command failed: node scripts/seed-classics.js
+/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/scripts/wait-db.js:25
+  throw new Error('Database did not become ready in time');
+        ^
+
+Error: Database did not become ready in time
+    at waitForDb (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/scripts/wait-db.js:25:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async run (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/scripts/seed-classics.js:6:3)
+
+Node.js v24.13.0
+
+    at genericNodeError (node:internal/errors:985:15)
+    at wrappedFn (node:internal/errors:539:14)
+    at ChildProcess.exithandler (node:child_process:417:12)
+    at ChildProcess.emit (node:events:508:28)
+    at maybeClose (node:internal/child_process:1101:16)
+    at ChildProcess._handle.onexit (node:internal/child_process:305:5) {
+  code: 1,
+  killed: false,
+  signal: null,
+  cmd: 'node scripts/seed-classics.js'
+}
+REQ GET /
+HOME: start handling
+Error in homeController.index: Error: Table 'paw_avaliacao.filmes' doesn't exist
+    at PromisePool.query (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at Object.listarRecentes (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/models/filme.js:23:27)
+    at exports.index (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/controllers/homeController.js:10:32)
+    at Layer.handleRequest (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/layer.js:152:17)
+    at next (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/route.js:117:3)
+    at handle (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/layer.js:152:17)
+    at /home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:295:15
+    at processParams (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:582:12) {
+  code: 'ER_NO_SUCH_TABLE',
+  errno: 1146,
+  sql: 'SELECT f.id, f.titulo, f.ano, f.categoria_id, f.imagem AS imagem, f.imdb_rating AS imdb_rating, c.nome AS categoria\n' +
+    '     FROM filmes f\n' +
+    '     LEFT JOIN categorias c ON f.categoria_id = c.id\n' +
+    '     ORDER BY f.id DESC\n' +
+    '     LIMIT 8',
+  sqlState: '42S02',
+  sqlMessage: "Table 'paw_avaliacao.filmes' doesn't exist"
+}
+REQ GET /
+HOME: start handling
+Error in homeController.index: Error: Table 'paw_avaliacao.filmes' doesn't exist
+    at PromisePool.query (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at Object.listarRecentes (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/models/filme.js:23:27)
+    at exports.index (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/controllers/homeController.js:10:32)
+    at Layer.handleRequest (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/layer.js:152:17)
+    at next (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/route.js:117:3)
+    at handle (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/layer.js:152:17)
+    at /home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:295:15
+    at processParams (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:582:12) {
+  code: 'ER_NO_SUCH_TABLE',
+  errno: 1146,
+  sql: 'SELECT f.id, f.titulo, f.ano, f.categoria_id, f.imagem AS imagem, f.imdb_rating AS imdb_rating, c.nome AS categoria\n' +
+    '     FROM filmes f\n' +
+    '     LEFT JOIN categorias c ON f.categoria_id = c.id\n' +
+    '     ORDER BY f.id DESC\n' +
+    '     LIMIT 8',
+  sqlState: '42S02',
+  sqlMessage: "Table 'paw_avaliacao.filmes' doesn't exist"
+}
+REQ GET /
+HOME: start handling
+Error in homeController.index: Error: Table 'paw_avaliacao.filmes' doesn't exist
+    at PromisePool.query (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at Object.listarRecentes (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/models/filme.js:23:27)
+    at exports.index (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/controllers/homeController.js:10:32)
+    at Layer.handleRequest (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/layer.js:152:17)
+    at next (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/route.js:117:3)
+    at handle (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/lib/layer.js:152:17)
+    at /home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:295:15
+    at processParams (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/router/index.js:582:12) {
+  code: 'ER_NO_SUCH_TABLE',
+  errno: 1146,
+  sql: 'SELECT f.id, f.titulo, f.ano, f.categoria_id, f.imagem AS imagem, f.imdb_rating AS imdb_rating, c.nome AS categoria\n' +
+    '     FROM filmes f\n' +
+    '     LEFT JOIN categorias c ON f.categoria_id = c.id\n' +
+    '     ORDER BY f.id DESC\n' +
+    '     LIMIT 8',
+  sqlState: '42S02',
+  sqlMessage: "Table 'paw_avaliacao.filmes' doesn't exist"
+}
+REQ POST /omdb-key
+OMDb key saved via web UI
+Starting fill-posters job...
+fill-posters failed: Error: Command failed: node scripts/fill-posters.js
+Error: Error: Table 'paw_avaliacao.filmes' doesn't exist
+    at PromisePool.query (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at run (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/scripts/fill-posters.js:15:29)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5) {
+  code: 'ER_NO_SUCH_TABLE',
+  errno: 1146,
+  sql: 'SELECT id, titulo, ano FROM filmes WHERE imagem IS NULL OR imdb_rating IS NULL',
+  sqlState: '42S02',
+  sqlMessage: "Table 'paw_avaliacao.filmes' doesn't exist"
+}
+
+    at genericNodeError (node:internal/errors:985:15)
+    at wrappedFn (node:internal/errors:539:14)
+    at ChildProcess.exithandler (node:child_process:417:12)
+    at ChildProcess.emit (node:events:508:28)
+    at maybeClose (node:internal/child_process:1101:16)
+    at ChildProcess._handle.onexit (node:internal/child_process:305:5) {
+  code: 1,
+  killed: false,
+  signal: null,
+  cmd: 'node scripts/fill-posters.js'
+} Error: Error: Table 'paw_avaliacao.filmes' doesn't exist
+    at PromisePool.query (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/node_modules/mysql2/lib/promise/pool.js:36:22)
+    at run (/home/agneloobruno/Documentos/UFMT/Programação em Ambiente Web II/projeto-paw/scripts/fill-posters.js:15:29)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5) {
+  code: 'ER_NO_SUCH_TABLE',
+  errno: 1146,
+  sql: 'SELECT id, titulo, ano FROM filmes WHERE imagem IS NULL OR imdb_rating IS NULL',
+  sqlState: '42S02',
+  sqlMessage: "Table 'paw_avaliacao.filmes' doesn't exist"
+}
+
+REQ POST /seed-classics
+REQ GET /filmes/novo
+REQ POST /filmes/salvar
+DEBUG salvar: imagem_file= false imagem_url= false omdbKeyPresent= true
+DEBUG salvar: calling OMDb for Elite Squad year= 2007
+DEBUG salvar: omdb result poster= https://m.media-amazon.com/images/M/MV5BZjU3Yzk3NzctYWNiNy00YWMzLThiOGItODc3NmEzODBkYjRmXkEyXkFqcGc@._V1_SX300.jpg imdbRating= 8.0
+REQ GET /filmes/editar/21
+REQ POST /filmes/atualizar
+REQ GET /filmes
+REQ GET /
+HOME: start handling
+HOME: fetched filmes count= 8
+HOME: fetched categorias count= 10
+HOME: counting for categoria 5
+HOME: counting for categoria 3
+HOME: counting for categoria 2
+HOME: counting for categoria 1
+HOME: counting for categoria 7
+HOME: counting for categoria 8
+HOME: counting for categoria 4
+HOME: counting for categoria 6
+HOME: counting for categoria 9
+HOME: counting for categoria 10
+HOME: count for 5 = 1
+HOME: count for 10 = 1
+HOME: count for 3 = 2
+HOME: count for 1 = 6
+HOME: count for 2 = 4
+HOME: count for 7 = 1
+HOME: count for 6 = 3
+HOME: count for 4 = 1
+HOME: count for 8 = 1
+HOME: count for 9 = 1
+HOME: rendering home, filmes count= 8
+REQ GET /
+HOME: start handling
+HOME: fetched filmes count= 8
+HOME: fetched categorias count= 10
+HOME: counting for categoria 5
+HOME: counting for categoria 3
+HOME: counting for categoria 2
+HOME: counting for categoria 1
+HOME: counting for categoria 7
+HOME: counting for categoria 8
+HOME: counting for categoria 4
+HOME: counting for categoria 6
+HOME: counting for categoria 9
+HOME: counting for categoria 10
+HOME: count for 2 = 4
+HOME: count for 1 = 6
+HOME: count for 5 = 1
+HOME: count for 3 = 2
+HOME: count for 8 = 1
+HOME: count for 7 = 1
+HOME: count for 6 = 3
+HOME: count for 4 = 1
+HOME: count for 9 = 1
+HOME: count for 10 = 1
+HOME: rendering home, filmes count= 8
+REQ GET /categorias
+REQ GET /
+HOME: start handling
+HOME: fetched filmes count= 8
+HOME: fetched categorias count= 10
+HOME: counting for categoria 5
+HOME: counting for categoria 3
+HOME: counting for categoria 2
+HOME: counting for categoria 1
+HOME: counting for categoria 7
+HOME: counting for categoria 8
+HOME: counting for categoria 4
+HOME: counting for categoria 6
+HOME: counting for categoria 9
+HOME: counting for categoria 10
+HOME: count for 9 = 1
+HOME: count for 4 = 1
+HOME: count for 3 = 2
+HOME: count for 2 = 4
+HOME: count for 8 = 1
+HOME: count for 1 = 6
+HOME: count for 10 = 1
+HOME: count for 5 = 1
+HOME: count for 6 = 3
+HOME: count for 7 = 1
+HOME: rendering home, filmes count= 8
+REQ GET /
+HOME: start handling
+HOME: fetched filmes count= 8
+HOME: fetched categorias count= 10
+HOME: counting for categoria 5
+HOME: counting for categoria 3
+HOME: counting for categoria 2
+HOME: counting for categoria 1
+HOME: counting for categoria 7
+HOME: counting for categoria 8
+HOME: counting for categoria 4
+HOME: counting for categoria 6
+HOME: counting for categoria 9
+HOME: counting for categoria 10
+HOME: count for 5 = 1
+HOME: count for 3 = 2
+HOME: count for 2 = 4
+HOME: count for 6 = 3
+HOME: count for 1 = 6
+HOME: count for 9 = 1
+HOME: count for 10 = 1
+HOME: count for 8 = 1
+HOME: count for 4 = 1
+HOME: count for 7 = 1
+HOME: rendering home, filmes count= 8
+REQ GET /
+HOME: start handling
+HOME: fetched filmes count= 8
+HOME: fetched categorias count= 10
+HOME: counting for categoria 5
+HOME: counting for categoria 3
+HOME: counting for categoria 2
+HOME: counting for categoria 1
+HOME: counting for categoria 7
+HOME: counting for categoria 8
+HOME: counting for categoria 4
+HOME: counting for categoria 6
+HOME: counting for categoria 9
+HOME: counting for categoria 10
+HOME: count for 8 = 1
+HOME: count for 3 = 2
+HOME: count for 2 = 4
+HOME: count for 7 = 1
+HOME: count for 1 = 6
+HOME: count for 5 = 1
+HOME: count for 4 = 1
+HOME: count for 10 = 1
+HOME: count for 9 = 1
+HOME: count for 6 = 3
+HOME: rendering home, filmes count= 8
+REQ GET /
+HOME: start handling
+HOME: fetched filmes count= 8
+HOME: fetched categorias count= 10
+HOME: counting for categoria 5
+HOME: counting for categoria 3
+HOME: counting for categoria 2
+HOME: counting for categoria 1
+HOME: counting for categoria 7
+HOME: counting for categoria 8
+HOME: counting for categoria 4
+HOME: counting for categoria 6
+HOME: counting for categoria 9
+HOME: counting for categoria 10
+HOME: count for 3 = 2
+HOME: count for 2 = 4
+HOME: count for 5 = 1
+HOME: count for 1 = 6
+HOME: count for 7 = 1
+HOME: count for 8 = 1
+HOME: count for 4 = 1
+HOME: count for 9 = 1
+HOME: count for 10 = 1
+HOME: count for 6 = 3
+HOME: rendering home, filmes count= 8
+REQ GET /categorias
+REQ GET /categorias
+REQ GET /categorias
+REQ GET /
+HOME: start handling
+HOME: fetched filmes count= 8
+HOME: fetched categorias count= 10
+HOME: counting for categoria 5
+HOME: counting for categoria 3
+HOME: counting for categoria 2
+HOME: counting for categoria 1
+HOME: counting for categoria 7
+HOME: counting for categoria 8
+HOME: counting for categoria 4
+HOME: counting for categoria 6
+HOME: counting for categoria 9
+HOME: counting for categoria 10
+HOME: count for 3 = 2
+HOME: count for 5 = 1
+HOME: count for 2 = 4
+HOME: count for 8 = 1
+HOME: count for 1 = 6
+HOME: count for 7 = 1
+HOME: count for 10 = 1
+HOME: count for 6 = 3
+HOME: count for 4 = 1
+HOME: count for 9 = 1
+HOME: rendering home, filmes count= 8
+REQ GET /
+HOME: start handling
+HOME: fetched filmes count= 8
+HOME: fetched categorias count= 10
+HOME: counting for categoria 5
+HOME: counting for categoria 3
+HOME: counting for categoria 2
+HOME: counting for categoria 1
+HOME: counting for categoria 7
+HOME: counting for categoria 8
+HOME: counting for categoria 4
+HOME: counting for categoria 6
+HOME: counting for categoria 9
+HOME: counting for categoria 10
+HOME: count for 3 = 2
+HOME: count for 1 = 6
+HOME: count for 5 = 1
+HOME: count for 2 = 4
+HOME: count for 7 = 1
+HOME: count for 8 = 1
+HOME: count for 4 = 1
+HOME: count for 10 = 1
+HOME: count for 9 = 1
+HOME: count for 6 = 3
+HOME: rendering home, filmes count= 8
+REQ GET /
+HOME: start handling
+HOME: fetched filmes count= 8
+HOME: fetched categorias count= 10
+HOME: counting for categoria 5
+HOME: counting for categoria 3
+HOME: counting for categoria 2
+HOME: counting for categoria 1
+HOME: counting for categoria 7
+HOME: counting for categoria 8
+HOME: counting for categoria 4
+HOME: counting for categoria 6
+HOME: counting for categoria 9
+HOME: counting for categoria 10
+HOME: count for 5 = 1
+HOME: count for 3 = 2
+HOME: count for 2 = 4
+HOME: count for 1 = 6
+HOME: count for 6 = 3
+HOME: count for 8 = 1
+HOME: count for 10 = 1
+HOME: count for 4 = 1
+HOME: count for 7 = 1
+HOME: count for 9 = 1
+HOME: rendering home, filmes count= 8
+REQ GET /categorias
+REQ GET /categorias/editar/7
+REQ GET /categorias/editar/10
+REQ GET /categorias/editar/5
+REQ GET /categorias/editar/3
