@@ -1,6 +1,6 @@
 <%- include('../partials/header') %>
 
-<h1 class="h3">Editar Categoria</h1>
+<h1 class="h3">Editar Categoria: <%= categoria.nome %></h1>
 
 <form action="/categorias/atualizar" method="post" class="mt-3">
   <input type="hidden" name="id" value="<%= categoria.id %>" />

@@ -1,6 +1,6 @@
 <%- include('../partials/header') %>
 
-<h1>Editar Filme</h1>
+<h1>Editar Filme: <%= filme.titulo %></h1>
 
 <form action="/filmes/atualizar" method="post" class="mt-3" enctype="multipart/form-data">
   <input type="hidden" name="id" value="<%= filme.id %>" />
