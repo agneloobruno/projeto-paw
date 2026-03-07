@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: projeto-paw-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: "hornet@2025"
+      MYSQL_DATABASE: "paw_avaliacao"
+      MYSQL_USER: "paw_user"
+      MYSQL_PASSWORD: "uma_senha_segura"
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./database.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  db_data:

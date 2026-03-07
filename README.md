@@ -45,6 +45,37 @@ mysql -u <usuario> -p < database.sql
 
 Após criar o banco, há scripts opcionais para popular dados de exemplo em `scripts/` (ex.: `scripts/seed-classics.js`).
 
+### Rodar MySQL com Docker
+
+Você pode levantar um container MySQL local usando o `docker-compose.yml` incluído. Ele usa o arquivo `database.sql` para inicializar o schema na primeira execução.
+
+1. Garanta que o arquivo `.env` contenha as variáveis `DB_NAME`, `DB_USER`, `DB_PASSWORD` (ou edite os valores padrão no `docker-compose.yml`).
+
+2. Suba o container:
+
+```bash
+docker compose up -d
+```
+
+3. Verifique logs e estado:
+
+```bash
+docker compose logs -f db
+docker compose ps
+```
+
+4. Ajuste sua aplicação para conectar ao banco:
+
+- Se você executa a aplicação no host (não em container), use `DB_HOST=127.0.0.1` e `DB_PORT=3306` no `.env`.
+- Se executar a aplicação também via Docker na mesma rede compose, use `DB_HOST=db`.
+
+Para parar e remover o serviço:
+
+```bash
+docker compose down
+```
+
+
 ## Execução
 
 Inicie a aplicação:
