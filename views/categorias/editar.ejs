@@ -16,4 +16,43 @@
   </div>
 </form>
 
+<hr class="my-4" />
+
+<h2 class="h5">Filmes em "<%= categoria.nome %>"</h2>
+<% if (filmes && filmes.length) { %>
+  <div class="table-responsive">
+    <table class="table table-dark table-striped mt-3">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Título</th>
+          <th>Ano</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% filmes.forEach(function(f){ %>
+          <tr>
+            <td style="width:72px">
+              <% if (f.imagem) { %>
+                <img src="<%= f.imagem %>" alt="" style="width:56px;height:84px;object-fit:cover;border-radius:6px" loading="lazy" />
+              <% } else { %>
+                <div style="width:56px;height:84px;background:#222;border-radius:6px"></div>
+              <% } %>
+            </td>
+            <td><%= f.titulo %></td>
+            <td><%= f.ano || '—' %></td>
+            <td class="text-end">
+              <a href="/filmes/editar/<%= f.id %>" class="btn btn-sm btn-outline-warning me-1">Editar</a>
+              <a href="/filmes/excluir/<%= f.id %>" class="btn btn-sm btn-danger btn-delete">Excluir</a>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+<% } else { %>
+  <div class="text-muted mt-3">Nenhum filme cadastrado nesta categoria.</div>
+<% } %>
+
 <%- include('../partials/footer') %>

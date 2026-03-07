@@ -1,33 +1,11 @@
 nohup: ignorando entrada
-[dotenv@17.3.1] injecting env (8) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+[dotenv@17.3.1] injecting env (8) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
 DEBUG app: OMDB_API_KEY present= true
-[dotenv@17.3.1] injecting env (0) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+[dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
 Server running on port 3006
-REQ HEAD /
-HOME: start handling
-HOME: fetched filmes count= 8
-HOME: fetched categorias count= 10
-HOME: counting for categoria 5
-HOME: counting for categoria 3
-HOME: counting for categoria 2
-HOME: counting for categoria 1
-HOME: counting for categoria 7
-HOME: counting for categoria 8
-HOME: counting for categoria 4
-HOME: counting for categoria 6
-HOME: counting for categoria 9
-HOME: counting for categoria 10
-HOME: count for 5 = 1
-HOME: count for 3 = 2
-HOME: count for 7 = 1
-HOME: count for 8 = 1
-HOME: count for 9 = 1
-HOME: count for 2 = 3
-HOME: count for 4 = 1
-HOME: count for 1 = 6
-HOME: count for 6 = 3
-HOME: count for 10 = 1
-HOME: rendering home, filmes count= 8
+REQ GET /categorias
+REQ GET /categorias
+REQ GET /categorias/editar/2
 REQ GET /
 HOME: start handling
 HOME: fetched filmes count= 8
@@ -42,15 +20,14 @@ HOME: counting for categoria 4
 HOME: counting for categoria 6
 HOME: counting for categoria 9
 HOME: counting for categoria 10
-HOME: count for 3 = 2
 HOME: count for 2 = 3
-HOME: count for 6 = 3
-HOME: count for 10 = 1
+HOME: count for 5 = 1
+HOME: count for 3 = 2
 HOME: count for 1 = 6
 HOME: count for 9 = 1
-HOME: count for 5 = 1
-HOME: count for 8 = 1
 HOME: count for 4 = 1
+HOME: count for 10 = 1
+HOME: count for 8 = 1
 HOME: count for 7 = 1
+HOME: count for 6 = 3
 HOME: rendering home, filmes count= 8
-REQ GET /filmes/editar/18

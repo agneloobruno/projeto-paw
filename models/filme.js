@@ -68,6 +68,17 @@ async function contarPorCategoria(categoria_id) {
   return rows[0] ? rows[0].cnt : 0;
 }
 
+async function listarPorCategoria(categoria_id) {
+  const [rows] = await db.query(
+    `SELECT f.id, f.titulo, f.ano, f.categoria_id, f.imagem AS imagem, f.imdb_rating AS imdb_rating
+     FROM filmes f
+     WHERE f.categoria_id = ?
+     ORDER BY f.titulo`,
+    [categoria_id]
+  );
+  return rows;
+}
+
 module.exports = {
   listarTodas,
   buscarPorId,
@@ -77,4 +88,5 @@ module.exports = {
   contarPorCategoria
   , listarRecentes
   , suggest
+  , listarPorCategoria
 };

@@ -21,9 +21,25 @@ exports.index = async (req, res) => {
       'https://images.unsplash.com/photo-1517604634494-6fb1a0a0c6b4?auto=format&fit=crop&w=800&q=60'
     ];
 
+    // Icon mapping by category name (bootstrap-icons)
+    const iconMap = {
+      'drama': 'bi bi-collection-fill',
+      'comedy': 'bi bi-emoji-smile-fill',
+      'romance': 'bi bi-heart-fill',
+      'action': 'bi bi-lightning-fill',
+      'horror': 'bi bi-skull-fill',
+      'adventure': 'bi bi-binoculars-fill',
+      'fantasy': 'bi bi-stars',
+      'crime': 'bi bi-shield-lock-fill',
+      'music': 'bi bi-music-note-list',
+      'sci-fi': 'bi bi-robot',
+      'documentary': 'bi bi-book-half'
+    };
+
     const categoriasWithImage = categoriasWithCount.map((c, i) => ({
       ...c,
-      image: c.image || images[i % images.length]
+      image: c.image || images[i % images.length],
+      icon: c.icon || iconMap[(c.nome || '').toLowerCase()] || 'bi bi-film'
     }));
 
     res.render('categorias/index', { title: 'Categorias', categorias: categoriasWithImage });
@@ -57,7 +73,10 @@ exports.editar = async (req, res) => {
       req.flash('error_msg', 'Categoria não encontrada.');
       return res.redirect('/categorias');
     }
-    res.render('categorias/editar', { title: 'Editar Categoria', categoria });
+    // fetch filmes desta categoria
+    const Filme = require('../models/filme');
+    const filmes = await Filme.listarPorCategoria(id);
+    res.render('categorias/editar', { title: 'Editar Categoria', categoria, filmes });
   } catch (err) {
     req.flash('error_msg', 'Erro ao buscar categoria.');
     res.redirect('/categorias');

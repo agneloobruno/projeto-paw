@@ -30,13 +30,18 @@ exports.index = async (req, res) => {
 
     console.log('HOME: rendering home, filmes count=', Array.isArray(filmes) ? filmes.length : typeof filmes);
     const omdbKeyPresent = !!process.env.OMDB_API_KEY;
-    res.render('index', { title: 'Home', filmes, categorias: categoriasWithCount, omdbKeyPresent });
+    // detect whether seed script was already run (marker file)
+    const seedMarker = path.join(__dirname, '..', '.seed_done');
+    const seedDone = fs.existsSync(seedMarker);
+    res.render('index', { title: 'Home', filmes, categorias: categoriasWithCount, omdbKeyPresent, seedDone });
   } catch (err) {
     console.error('Error in homeController.index:', err);
     req.flash('error_msg', 'Erro ao carregar home. Verifique a conexão com o banco.');
     // Render the index with empty data to avoid redirect loop
     // Ensure `omdbKeyPresent` is always provided to the template
-    res.status(500).render('index', { title: 'Home', filmes: [], categorias: [], omdbKeyPresent: !!process.env.OMDB_API_KEY });
+    const seedMarker = path.join(__dirname, '..', '.seed_done');
+    const seedDone = fs.existsSync(seedMarker);
+    res.status(500).render('index', { title: 'Home', filmes: [], categorias: [], omdbKeyPresent: !!process.env.OMDB_API_KEY, seedDone });
   }
 };
 
@@ -99,7 +104,14 @@ exports.runSeedClassics = async (req, res) => {
         console.error('Seed error:', err);
         return res.status(500).json({ ok: false, message: 'Erro no seed', stderr: stderr || err.message });
       }
-      return res.json({ ok: true, output: stdout });
+        // mark seed as done
+        try {
+          const marker = path.join(__dirname, '..', '.seed_done');
+          fs.writeFileSync(marker, new Date().toISOString(), 'utf8');
+        } catch (werr) {
+          console.error('Could not write seed marker:', werr);
+        }
+        return res.json({ ok: true, output: stdout });
     });
   } catch (err) {
     console.error('runSeedClassics error:', err);

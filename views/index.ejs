@@ -101,11 +101,11 @@
 			<% if (filmes && filmes.length) { filmes.forEach(function(f){ %>
 				<div class="poster-card">
 					<a href="/filmes/editar/<%= f.id %>" class="poster-link">
-						<% if (f.imagem) { %>
-							<img src="<%= f.imagem %>" alt="<%= f.titulo %>" class="poster-img" />
-						<% } else { %>
-							<img src="/images/poster-placeholder.svg" alt="placeholder" class="poster-img" />
-						<% } %>
+												<% if (f.imagem) { %>
+													<img src="<%= f.imagem %>" alt="<%= f.titulo %>" class="poster-img" loading="lazy" width="300" height="450" />
+												<% } else { %>
+													<img src="/images/poster-placeholder.svg" alt="placeholder" class="poster-img img-placeholder" loading="lazy" width="300" height="450" />
+												<% } %>
 						<div class="poster-overlay">
 							<div class="poster-title"><%= f.titulo %></div>
 							<% if (f.imdb_rating) { %>

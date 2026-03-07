@@ -11,82 +11,19 @@
 
 <div class="main-card p-3 position-relative">
   <% if (categorias && categorias.length) { %>
-    <button id="cat-prev" class="carousel-btn carousel-prev" aria-label="Anterior"><i class="bi bi-chevron-left"></i></button>
-    <button id="cat-next" class="carousel-btn carousel-next" aria-label="Próximo"><i class="bi bi-chevron-right"></i></button>
-
-    <div class="categories-row" id="categoriesScroll">
+    <div class="categories-grid">
       <% categorias.forEach(function(c){ %>
-        <div class="category-tile" tabindex="0">
+        <a href="/categorias/editar/<%= c.id %>" class="category-tile" style="text-decoration:none;color:inherit" tabindex="0">
           <div class="category-bg" style="background-image:url('<%- c.image %>')"></div>
-          <div class="category-content">
-            <div>
-              <div class="category-name"><%= c.nome %></div>
-              <div class="text-muted small"><%= c.count %> filmes</div>
-            </div>
-            <div class="category-actions d-flex justify-content-end">
-              <a href="/categorias/editar/<%= c.id %>" class="btn btn-sm btn-outline-warning me-2" title="Editar"><i class="bi bi-pencil"></i></a>
-              <a href="#" data-href="/categorias/excluir/<%= c.id %>" data-name="<%= c.nome %>" class="btn btn-sm btn-danger btn-delete" title="Excluir"><i class="bi bi-trash"></i></a>
-            </div>
+          <div class="category-overlay"></div>
+          <div class="category-center">
+            <div class="category-icon"><i class="<%= c.icon %>"></i></div>
+            <div class="category-name"><%= c.nome %></div>
+            <div class="category-sub"><%= c.count %> filmes</div>
           </div>
-        </div>
+        </a>
       <% }) %>
     </div>
-
-    <div class="carousel-fade left"></div>
-    <div class="carousel-fade right"></div>
-
-    <script>
-      document.addEventListener('DOMContentLoaded', function(){
-        const sc = document.getElementById('categoriesScroll');
-        const prev = document.getElementById('cat-prev');
-        const next = document.getElementById('cat-next');
-
-        // Smooth scroll helpers
-        function pageScroll(direction){
-          const step = sc.clientWidth * 0.6; // scroll by 60% of visible area
-          sc.scrollBy({ left: direction * step, behavior: 'smooth' });
-        }
-
-        prev.addEventListener('click', () => pageScroll(-1));
-        next.addEventListener('click', () => pageScroll(1));
-
-        // enable / disable buttons depending on scroll pos
-        function updateButtons(){
-          prev.disabled = sc.scrollLeft <= 5;
-          next.disabled = sc.scrollLeft + sc.clientWidth >= sc.scrollWidth - 5;
-        }
-        sc.addEventListener('scroll', updateButtons);
-        window.addEventListener('resize', updateButtons);
-        updateButtons();
-
-        // keyboard navigation for accessibility
-        sc.addEventListener('keydown', (e) => {
-          if (e.key === 'ArrowLeft') pageScroll(-1);
-          if (e.key === 'ArrowRight') pageScroll(1);
-        });
-
-        // Autoplay (pause on hover/focus)
-        let autoplay = true;
-        const AUTOPLAY_DELAY = 3500;
-        let autoplayTimer = null;
-
-        function startAutoplay(){
-          if (autoplayTimer) return;
-          autoplayTimer = setInterval(() => { pageScroll(1); }, AUTOPLAY_DELAY);
-        }
-        function stopAutoplay(){
-          if (autoplayTimer) { clearInterval(autoplayTimer); autoplayTimer = null; }
-        }
-
-        sc.addEventListener('mouseenter', () => { stopAutoplay(); });
-        sc.addEventListener('mouseleave', () => { if (autoplay) startAutoplay(); });
-        sc.addEventListener('focusin', () => { stopAutoplay(); });
-        sc.addEventListener('focusout', () => { if (autoplay) startAutoplay(); });
-
-        // Start autoplay if content overflows
-        if (sc.scrollWidth > sc.clientWidth) startAutoplay();
-      });
-    </script>
   <% } else { %>
     <div class="text-center py-4">
       <p class="mb-2">Nenhuma categoria cadastrada.</p>
