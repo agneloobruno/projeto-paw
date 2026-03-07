@@ -7,26 +7,24 @@
 
 <div class="main-card">
   <% if (filmes && filmes.length) { %>
-    <div class="poster-grid">
+    <div class="poster-grid clean-grid">
       <% filmes.forEach(function(f){ %>
-        <div class="poster-card">
+        <div class="poster-card clean-card">
           <a href="/filmes/editar/<%= f.id %>" class="poster-link" aria-label="Abrir <%= f.titulo %>">
             <% if (f.imagem) { %>
               <img src="<%= f.imagem %>" alt="<%= f.titulo %>" class="poster-img" loading="lazy" width="300" height="450" />
             <% } else { %>
               <img src="/images/poster-placeholder.svg" alt="Poster" class="poster-img img-placeholder" loading="lazy" width="300" height="450" />
             <% } %>
-            <div class="poster-overlay">
-              <div class="poster-title"><%= f.titulo %></div>
-              <% if (f.imdb_rating) { %>
-                <div class="poster-rating" title="IMDB Rating"><i class="bi bi-star-fill"></i> <%= f.imdb_rating %></div>
-              <% } %>
+            <div class="poster-meta">
+              <div class="poster-meta-inner">
+                <div class="poster-title"><%= f.titulo %></div>
+                <% if (f.imdb_rating) { %>
+                  <div class="poster-rating" title="IMDB Rating"><i class="bi bi-star-fill"></i> <%= f.imdb_rating %></div>
+                <% } %>
+              </div>
             </div>
           </a>
-          <div class="d-flex justify-content-between align-items-center mt-2">
-            <a href="/filmes/editar/<%= f.id %>" class="btn btn-sm btn-outline-warning" title="Editar <%= f.titulo %>"><i class="bi bi-pencil"></i></a>
-            <a href="#" data-href="/filmes/excluir/<%= f.id %>" data-name="<%= f.titulo %>" class="btn btn-sm btn-danger btn-delete" title="Excluir <%= f.titulo %>"><i class="bi bi-trash"></i></a>
-          </div>
         </div>
       <% }) %>
     </div>

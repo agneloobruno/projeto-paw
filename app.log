@@ -1357,3 +1357,36 @@ REQ GET /categorias/editar/7
 REQ GET /categorias/editar/10
 REQ GET /categorias/editar/5
 REQ GET /categorias/editar/3
+REQ GET /filmes
+REQ GET /filmes/novo
+REQ POST /filmes/salvar
+DEBUG salvar: imagem_file= false imagem_url= false omdbKeyPresent= true
+DEBUG salvar: calling OMDb for City of God year= 2003
+DEBUG salvar: omdb result poster= null imdbRating= null
+REQ GET /filmes/editar/22
+REQ POST /filmes/atualizar
+REQ GET /filmes
+REQ GET /filmes/novo
+REQ POST /filmes/salvar
+DEBUG salvar: imagem_file= false imagem_url= false omdbKeyPresent= true
+DEBUG salvar: calling OMDb for Carandiru year= 2003
+DEBUG salvar: omdb result poster= https://m.media-amazon.com/images/M/MV5BY2E3NzI1NGItNzVhNy00Njk5LTllZDMtNmExMDY3NzViZDY2XkEyXkFqcGc@._V1_SX300.jpg imdbRating= 7.6
+REQ GET /filmes/editar/23
+REQ POST /filmes/atualizar
+REQ GET /filmes
+REQ GET /filmes/novo
+REQ POST /filmes/salvar
+DEBUG salvar: imagem_file= false imagem_url= false omdbKeyPresent= true
+DEBUG salvar: calling OMDb for The Spiderwick Chronicles year= 2008
+DEBUG salvar: omdb result poster= https://m.media-amazon.com/images/M/MV5BOWRiMmUzZTctYWUxNy00ZjkyLWE4NTctMzFlMTFkYmI5NmFkXkEyXkFqcGc@._V1_SX300.jpg imdbRating= 6.5
+REQ GET /filmes/editar/24
+REQ POST /filmes/atualizar
+REQ GET /filmes
+REQ GET /filmes/novo
+REQ POST /filmes/salvar
+DEBUG salvar: imagem_file= false imagem_url= false omdbKeyPresent= true
+DEBUG salvar: calling OMDb for The Green Mile year= 1999
+DEBUG salvar: omdb result poster= https://m.media-amazon.com/images/M/MV5BMTUxMzQyNjA5MF5BMl5BanBnXkFtZTYwOTU2NTY3._V1_SX300.jpg imdbRating= 8.6
+REQ GET /filmes/editar/25
+REQ POST /filmes/atualizar
+REQ GET /filmes
