@@ -26,3 +26,17 @@ async function waitForDb({ retries = 15, delayMs = 2000 } = {}) {
 }
 
 module.exports = waitForDb;
+
+if (require.main === module) {
+  (async () => {
+    try {
+      console.log('Aguardando banco de dados...');
+      await waitForDb();
+      console.log('Banco de dados pronto.');
+      process.exit(0);
+    } catch (err) {
+      console.error('Erro ao aguardar DB:', err && err.message ? err.message : err);
+      process.exit(1);
+    }
+  })();
+}

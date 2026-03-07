@@ -1,81 +1,127 @@
 <%- include('partials/header') %>
 
-<!-- OMDb info carousel + API key input -->
+<!-- OMDb / seed area -->
 <section class="mb-4">
-	<div id="omdbCarousel" class="carousel slide mb-3" data-bs-ride="carousel">
-		<div class="carousel-inner">
-			<div class="carousel-item active">
-				<div class="p-4 bg-dark text-white rounded">
-					<h4>Chave OMDb necessária</h4>
-					<p>Para que a aplicação busque pôsters e avaliações automaticamente, forneça uma chave de API gratuita obtida em <a href="https://www.omdbapi.com/" target="_blank" class="text-info">OMDb</a>.</p>
-				</div>
+	<% if (seedDone) { %>
+		<div id="omdbArea">
+			<div class="d-flex mb-3 align-items-center">
+				<a href="/filmes/novo" class="btn btn-lg btn-primary">Adicionar filme</a>
+				<div class="ms-3 text-muted">Catálogo populado.</div>
 			</div>
-			<div class="carousel-item">
-				<div class="p-4 bg-dark text-white rounded">
-					<h4>Como obter</h4>
-					<p>Cadastre-se no site e gere sua chave. Cole-a abaixo — não demora.</p>
+		</div>
+	<% } else { %>
+		<div id="omdbArea">
+			<div id="omdbCarousel" class="carousel slide mb-3" data-bs-ride="carousel">
+			<div class="carousel-inner">
+				<div class="carousel-item active">
+					<div class="p-4 bg-dark text-white rounded">
+						<h4>Chave OMDb necessária</h4>
+						<p>Para que a aplicação busque pôsters e avaliações automaticamente, forneça uma chave de API gratuita obtida em <a href="https://www.omdbapi.com/" target="_blank" class="text-info">OMDb</a>.</p>
+					</div>
 				</div>
-			</div>
-			<div class="carousel-item">
-				<div class="p-4 bg-dark text-white rounded">
-					<h4>Popular com clássicos</h4>
-					<p>Após fornecer a chave, um botão será liberado para popular o catálogo com 20 clássicos do cinema.</p>
+				<div class="carousel-item">
+					<div class="p-4 bg-dark text-white rounded">
+						<h4>Como obter</h4>
+						<p>Cadastre-se no site e gere sua chave. Cole-a abaixo — não demora.</p>
+					</div>
+				</div>
+				<div class="carousel-item">
+					<div class="p-4 bg-dark text-white rounded">
+						<h4>Popular com clássicos</h4>
+						<p>Após fornecer a chave, um botão será liberado para popular o catálogo com 20 clássicos do cinema.</p>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<div class="d-flex gap-2 align-items-center mb-4">
-		<input id="omdbKeyInput" class="form-control form-control-sm" placeholder="Cole sua OMDb API key aqui" value="<%= typeof omdbKeyPresent !== 'undefined' && omdbKeyPresent ? '••••••••' : '' %>" />
-		<button id="saveOmdbBtn" class="btn btn-primary btn-sm">Salvar chave</button>
-		<button id="seedBtn" class="btn btn-success btn-sm" disabled>Popular 20 clássicos</button>
-		<div id="omdbStatus" class="ms-3 small text-muted"></div>
-	</div>
+		<div class="d-flex gap-2 align-items-center mb-4">
+			<input id="omdbKeyInput" class="form-control form-control-sm" placeholder="Cole sua OMDb API key aqui" value="<%= typeof omdbKeyPresent !== 'undefined' && omdbKeyPresent ? '••••••••' : '' %>" />
+			<button id="saveOmdbBtn" class="btn btn-primary btn-sm">Salvar chave</button>
+			<button id="seedBtn" class="btn btn-success btn-sm" disabled>
+				<span id="seedSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+				<span id="seedLabel">Popular 20 clássicos</span>
+			</button>
+			<div id="omdbStatus" class="ms-3 small text-muted"></div>
+		</div>
+		<div id="seedDetails" class="small text-muted" style="white-space:pre-wrap;margin-top:.5rem;display:none"></div>
 
-	<script>
-		(function(){
-			const keyInput = document.getElementById('omdbKeyInput');
-			const saveBtn = document.getElementById('saveOmdbBtn');
-			const seedBtn = document.getElementById('seedBtn');
-			const status = document.getElementById('omdbStatus');
-			const keyPresent = <%= (typeof omdbKeyPresent !== 'undefined' && omdbKeyPresent) ? 'true' : 'false' %>;
-			if (keyPresent) seedBtn.disabled = false;
+		<script>
+			(function(){
+				const keyInput = document.getElementById('omdbKeyInput');
+				const saveBtn = document.getElementById('saveOmdbBtn');
+				const seedBtn = document.getElementById('seedBtn');
+				const status = document.getElementById('omdbStatus');
+				const keyPresent = <%= (typeof omdbKeyPresent !== 'undefined' && omdbKeyPresent) ? 'true' : 'false' %>;
+				if (keyPresent) seedBtn.disabled = false;
 
-			saveBtn.addEventListener('click', async function(){
-				const key = keyInput.value.trim();
-				if (!key) { status.textContent = 'Chave vazia'; return; }
-				status.textContent = 'Salvando...';
-				try {
-					const res = await fetch('/omdb-key', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ key }) });
-					const j = await res.json();
-					if (j.ok) {
-						status.textContent = 'Chave salva.';
+				saveBtn.addEventListener('click', async function(){
+					const key = keyInput.value.trim();
+					if (!key) { status.textContent = 'Chave vazia'; return; }
+					status.textContent = 'Salvando...';
+					try {
+						const res = await fetch('/omdb-key', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ key }) });
+						const j = await res.json();
+						if (j.ok) {
+							status.textContent = 'Chave salva.';
+							seedBtn.disabled = false;
+						} else {
+							status.textContent = j.message || 'Erro ao salvar';
+						}
+					} catch (e) { status.textContent = 'Erro de rede'; }
+				});
+
+				seedBtn.addEventListener('click', async function(){
+					if (!confirm('Executar script para popular 20 clássicos?')) return;
+					seedBtn.disabled = true;
+					document.getElementById('seedSpinner').classList.remove('d-none');
+					document.getElementById('seedLabel').textContent = 'Executando...';
+					status.textContent = 'Executando seed...';
+					seedDetails.style.display = 'none';
+					try {
+						const res = await fetch('/seed-classics', { method: 'POST' });
+						const j = await res.json();
+						if (j.ok) {
+							status.textContent = 'Seed concluído.';
+							document.getElementById('seedSpinner').classList.add('d-none');
+							document.getElementById('seedLabel').textContent = 'Concluído';
+							// dynamically swap UI to 'seed done' state without reload
+							try { showSeedDoneUI(); } catch(e) { setTimeout(()=> location.reload(), 1000); }
+						} else {
+							const msg = j.message || 'Erro no seed';
+							status.textContent = msg;
+							// show detailed stderr/stdout if present
+							let details = '';
+							if (j.stderr) details += 'STDERR:\n' + j.stderr + '\n';
+							if (j.stdout) details += 'STDOUT:\n' + j.stdout + '\n';
+							if (details) {
+								seedDetails.textContent = details;
+								seedDetails.style.display = 'block';
+							}
+							seedBtn.disabled = false;
+							document.getElementById('seedSpinner').classList.add('d-none');
+							document.getElementById('seedLabel').textContent = 'Popular 20 clássicos';
+						}
+					} catch (e) {
+						status.textContent = 'Erro de rede';
 						seedBtn.disabled = false;
-					} else {
-						status.textContent = j.message || 'Erro ao salvar';
+						document.getElementById('seedSpinner').classList.add('d-none');
+						document.getElementById('seedLabel').textContent = 'Popular 20 clássicos';
 					}
-				} catch (e) { status.textContent = 'Erro de rede'; }
-			});
+				});
 
-			seedBtn.addEventListener('click', async function(){
-				if (!confirm('Executar script para popular 20 clássicos?')) return;
-				seedBtn.disabled = true;
-				status.textContent = 'Executando seed...';
-				try {
-					const res = await fetch('/seed-classics', { method: 'POST' });
-					const j = await res.json();
-					if (j.ok) {
-						status.textContent = 'Seed concluído.';
-						// reload page to show inserted films
-						setTimeout(()=> location.reload(), 1000);
-					} else {
-						status.textContent = j.message || 'Erro no seed';
-						seedBtn.disabled = false;
-					}
-				} catch (e) { status.textContent = 'Erro de rede'; seedBtn.disabled = false; }
-			});
-		})();
-	</script>
+				function showSeedDoneUI(){
+					const area = document.getElementById('omdbArea');
+					if (!area) return;
+					area.innerHTML = `<div class="d-flex mb-3 align-items-center">
+						<a href="/filmes/novo" class="btn btn-lg btn-primary">Adicionar filme</a>
+						<div class="ms-3 text-muted">Catálogo populado.</div>
+					</div>`;
+				}
+			})();
+		</script>
+	<% } %>
+
+<section class="hero-section mb-4">
 
 <section class="hero-section mb-4">
 	<% if (filmes && filmes.length && filmes[0]) { const f0 = filmes[0]; %>

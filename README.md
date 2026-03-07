@@ -86,6 +86,43 @@ npm start
 
 Por padrão a aplicação roda em `http://localhost:3000` (ou a porta definida em `PORT` no `.env`).
 
+### Fluxo plug-and-play recomendado
+
+Se estiver usando o `docker-compose` incluído:
+
+1. Suba o serviço MySQL:
+
+```bash
+docker compose up -d
+```
+
+2. Instale dependências (se ainda não fez):
+
+```bash
+npm install
+```
+
+3. Inicialize o banco e garanta colunas necessárias (executa `init-db` e alterações seguras):
+
+```bash
+npm run setup-db
+```
+
+4. Inicie o servidor (ou use o comando que aguarda o DB antes de iniciar):
+
+```bash
+npm run start:withdb
+```
+
+Alternativa única (executa init, columns e, opcionalmente, seed):
+
+```bash
+# roda bootstrap; para rodar seed automático defina SEED_ON_BOOT=true antes
+SEED_ON_BOOT=true npm run bootstrap
+```
+
+Esses comandos tornam o projeto mais "plug-and-play" — o `setup-db` garante que o schema e as colunas estão presentes mesmo após um reset do container.
+
 ## Uploads e arquivos estáticos
 
 - A pasta pública é `public/`. Os uploads são gravados em `public/uploads/` — verifique permissões de escrita para o usuário que executa o Node.

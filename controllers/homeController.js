@@ -95,23 +95,21 @@ exports.saveOmdbKey = async (req, res) => {
 // Run seed-classics script and return output
 exports.runSeedClassics = async (req, res) => {
   try {
-    if (!process.env.OMDB_API_KEY) {
-      return res.status(400).json({ ok: false, message: 'OMDb API key required' });
-    }
-    const cmd = 'node scripts/seed-classics.js';
-    exec(cmd, { cwd: path.join(__dirname, '..'), maxBuffer: 1024 * 1024 }, (err, stdout, stderr) => {
+    // Ensure DB schema exists by running init and add-column scripts first, then seed
+    const cmd = 'node scripts/init-db.js && node scripts/add-poster-column.js && node scripts/add-imdb-column.js && node scripts/seed-classics.js';
+    exec(cmd, { cwd: path.join(__dirname, '..'), maxBuffer: 10 * 1024 * 1024 }, (err, stdout, stderr) => {
       if (err) {
-        console.error('Seed error:', err);
-        return res.status(500).json({ ok: false, message: 'Erro no seed', stderr: stderr || err.message });
+        console.error('Seed (or init) error:', err);
+        return res.status(500).json({ ok: false, message: 'Erro no seed', stderr: stderr ? stderr.toString() : err.message, stdout: stdout ? stdout.toString() : '' });
       }
-        // mark seed as done
-        try {
-          const marker = path.join(__dirname, '..', '.seed_done');
-          fs.writeFileSync(marker, new Date().toISOString(), 'utf8');
-        } catch (werr) {
-          console.error('Could not write seed marker:', werr);
-        }
-        return res.json({ ok: true, output: stdout });
+      // mark seed as done
+      try {
+        const marker = path.join(__dirname, '..', '.seed_done');
+        fs.writeFileSync(marker, new Date().toISOString(), 'utf8');
+      } catch (werr) {
+        console.error('Could not write seed marker:', werr);
+      }
+      return res.json({ ok: true, output: stdout ? stdout.toString() : '' });
     });
   } catch (err) {
     console.error('runSeedClassics error:', err);
